@@ -1,0 +1,132 @@
+<%
+document.cacheDuration = 5000
+
+var locale = conversation.query.get('locale') || application.globals.get('bb.locale') || 'it'
+
+var theme = conversation.getCookie('ext-theme')
+if (theme) {
+	theme = decodeURIComponent(theme.value)
+	if (theme.substring(0, 2) == 's:') { // Ext JS StateManager uses this to specify string type 
+		theme = theme.substring(2)
+	}
+	else {
+		theme = null
+	}
+}
+
+theme = conversation.query.get('theme') || theme || application.globals.get('bb.theme') || 'blue'
+
+var debug = conversation.query.get('debug') || application.globals.get('bb.extJS.debug') || 'true'
+if (debug.booleanValue) {
+	debug = debug.booleanValue()
+}
+else if (typeof debug == 'string') {
+	debug = debug == 'true'
+}
+if (debug) {
+	// Debug CSS only has Blue theme
+	theme = 'blue'
+}
+%>
+<html>
+<head>
+	<title>BBvision</title>
+	<link rel="shortcut icon" href="media/bb.ico" />
+	<link rel="stylesheet" type="text/css" href="style/ext/style/css/ext-all-access.css" id="ext-theme" />
+<% if (debug) { %>
+	<!-- Ext JS Debug -->
+	<link rel="stylesheet" type="text/css" href="style/ext/style/css/ext-all-access.css" id="ext-theme" />
+	<script type="text/javascript" src="script/ext/ext-debug.js"></script>
+<% } else { %>
+	<!-- Ext JS -->
+	<link rel="stylesheet" type="text/css" href="style/ext/style/css/ext-all-access.css" id="ext-theme" />
+	<script type="text/javascript" src="script/ext/ext-all.js"></script>
+<% } %>
+	<!-- MongoVision's Ext JS Extensions -->
+	<script type="text/javascript" src="script/ux/HumanJSON.js"></script>
+	<script type="text/javascript" src="script/ux/LoadMask.js"></script>
+	<script type="text/javascript" src="script/ux/PerPage.js"></script>
+	<script type="text/javascript" src="script/ux/TextFieldPopup.js"></script>
+	<script type="text/javascript" src="script/ux/ThemeSwitcher.js"></script>
+
+	<!-- Gritter Ext JS Extension (https://github.com/zir/ext-growl) -->
+	<link rel="stylesheet" type="text/css" href="style/ux/gritter/css/ext-growl.css" />
+	<script type="text/javascript" src="script/ux/ext-growl.js"></script>
+	<style type="text/css">
+    .field-margin {
+        margin: 10px;
+    }
+</style>
+	<style type="text/css">
+    .filter-margin {
+        margin: 5px;
+    }
+</style>
+	<style type="text/css">
+    .filter-or-margin {
+        margin: 5px;
+    }
+</style>
+
+
+	<!-- bb -->
+	<link rel="stylesheet" type="text/css" href="style/bb-base.css" />
+	<link rel="stylesheet" type="text/css" href="style/bb-<%= theme %>.css" id="bb-theme" />
+	<script src="script/encryption.js" type="text/javascript"></script>
+	<script type="text/javascript" src="script/locale/<%= locale %>.js"></script>
+	<script type="text/javascript" src="script/model/User.js"></script>
+	<script type="text/javascript" src="script/model/Contact.js"></script>
+	<script type="text/javascript" src="script/model/Company.js"></script>
+	<script type="text/javascript" src="script/store/User.js"></script>
+	<script type="text/javascript" src="script/store/Company4Combo.js"></script>
+	<script type="text/javascript" src="script/store/Contact.js"></script>
+	<script type="text/javascript" src="script/store/Company.js"></script>
+	<script type="text/javascript" src="script/View/User.js"></script>
+	<script type="text/javascript" src="script/View/Contact.js"></script>
+	<script type="text/javascript" src="script/View/Company.js"></script>
+	<script type="text/javascript" src="script/View/filterContactList.js"></script>
+	<script type="text/javascript" src="script/View/filterCompanyList.js"></script>
+	<script type="text/javascript" src="script/commodity/User.js"></script>
+	<script type="text/javascript" src="script/View/Login.js"></script>
+		<script type="text/javascript" src="script/app.js"></script>
+
+<% if (debug) { %>
+	<script type="text/javascript">
+		Ext.onReady(function() {
+			//Ext.log('MongoVision has been started in debug mode.');
+		});
+	</script>
+<% } %>
+</head>
+<body id="body">
+	<div id="header" class="x-hidden">
+		<table width="100%"><tr>
+			<td width="1%" align="left">
+				<table height="100%"><tr>
+					<td style="padding-right: 10px;">
+						<img src="media/bb.jpg" />
+					</td>
+					<td>
+						<h2 style="font-size: 14px;">Bello & Buono</h2>
+						Version <%= application.globals.get('bb.version') %>
+					</td>
+				</tr></table>		
+			</td>
+			<td width="98%" id="header-main" align="right">
+			</td>
+			<td width="1%" align="right">
+				<table height="100%"><tr>
+					<td>
+						Made with <a href="http://threecrickets.com/prudence/">Prudence</a><br />
+						By <a href="http://threecrickets.com/">Giuseppe D'Amico</a>
+					</td>
+					<td style="padding-left: 10px;">
+						<a href="http://threecrickets.com/prudence/"><img src="media/prudence-small.png" /></a>
+					</td>
+				</tr></table>		
+			</td>
+		</tr></table>		
+	</div>
+	<div id="tree-self-contained"></div>
+</body>
+</html>

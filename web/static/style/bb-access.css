@@ -1,0 +1,52 @@
+/*
+Copyright 2010 Three Crickets LLC.
+
+The contents of this file are subject to the terms of the Apache License
+version 2.0: http://www.opensource.org/licenses/apache2.0.php
+ 
+Alternatively, you can obtain a royalty free commercial license with less
+limitations, transferable or non-transferable, directly from Three Crickets
+at http://threecrickets.com/
+*/
+
+/* Header */
+
+div#header a {
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+}
+
+/* Collection Panel */
+
+div.x-mongovision-document {
+	font: 14px arial, tahoma, helvetica, sans-serif;
+	line-height: 180%;
+	border-bottom: 1px #CCCCCC solid;
+	padding-left: 5px;
+}
+
+div.x-mongovision-over {
+	background-color: #7E5530;
+}
+
+/* Ext JS Overrides */
+
+div.x-item-selected {
+	background-color: #E5872C;
+}
+
+tr.x-grid-row-over div {
+	background-color: #7E5530;
+}
+
+
+
+
+
+
+/* Ext JS Panel */
+
+_div.x-tab-panel-body {
+	background-color: #232D38;
+}
