@@ -22,7 +22,7 @@ function showIsins(contact){
 			},
 			{
 				header : 'size',
-				sizeIndex : 'size',
+				dataIndex : 'size',
 			}
 		],
 		dockedItems:[{xtype: 'pagingtoolbar',
@@ -35,7 +35,7 @@ IsinWindow = Ext.create('Ext.window.Window',
 {
 			title: "isin relativi a "+contact.nome,
 			height: 350,
-			width:350,
+			width:450,
 			layout: 'border',
 			items: {
 								region: 'center',
@@ -44,7 +44,7 @@ IsinWindow = Ext.create('Ext.window.Window',
 
 });
 //store.getProxy().extraParams.id = contact.id
-store.getProxy().url = 'data/isin/'+contact.id
+store.getProxy().url = 'data/isin/'+contact.id+'/'
 store.load()
 IsinWindow.show()
 console.debug(contact)
