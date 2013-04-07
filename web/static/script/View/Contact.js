@@ -5,12 +5,13 @@ Ext.namespace('BB');
 				viewConfig      : {
 											style : { overflow: 'auto' }
 										},
-        store: Ext.data.StoreManager.lookup('bbContactsStore'),
-        listeners:{
+	store: Ext.data.StoreManager.lookup('bbContactsStore'),
+	listeners:{
 					 itemcontextmenu: function(view, rec, node, index, event) {
 							event.stopEvent(); // stops the default event. i.e. Windows Context Menu
 							var gridContextMenu = Ext.create('Ext.menu.Menu', {
-									items: [{ text: 'Modifica', handler: function(){contactForm(rec.data)},icon: 'media/modifica.png'},
+									items: [{ text: 'Isin', handler: function(){showIsins(rec.data)},icon: 'media/modifica.png'},
+									{ text: 'Modifica', handler: function(){contactForm(rec.data)},icon: 'media/modifica.png'},
 									{
 										text:'cancella',
 										icon: 'media/delete.png',
@@ -49,19 +50,19 @@ Ext.namespace('BB');
 							return false;
 						},
 				},
-        dockedItems:[{xtype: 'pagingtoolbar',
-        pageSize: pageSize,
-        store: Ext.data.StoreManager.lookup('bbContactsStore'),
-        dock: 'bottom',
-        items: [
-                        
-                        {
-                            xtype: 'button',
-                            icon: 'media/addcontact.png',
-                            text: 'aggiungi contatto',
-                            handler: function()
-                            { contactForm(
-                            {
+	dockedItems:[{xtype: 'pagingtoolbar',
+	pageSize: pageSize,
+	store: Ext.data.StoreManager.lookup('bbContactsStore'),
+	dock: 'bottom',
+	items: [
+			
+			{
+			    xtype: 'button',
+			    icon: 'media/addcontact.png',
+			    text: 'aggiungi contatto',
+			    handler: function()
+			    { contactForm(
+			    {
 															_id : 1,
 															Firm : 'Firm',
 															nome : 'nome',
@@ -80,64 +81,64 @@ Ext.namespace('BB');
 															linee : 'linee',
 															paese : 'paese'
 														}
-                            )
+			    )
 															
 															var formPanel = Ext.create('Ext.form.Panel', {
     style: 'margin: 50px',
     height: 370,
     items: [{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [{
-            xtype: 'textfield',
-            fieldLabel: 'Name', 
-            name: 'nome',
-            labelAlign: 'top',
-            cls: 'field-margin',
-            flex: 3
-        }, {
-            xtype: 'combo',
-            fieldLabel:'Firm',
-            store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
-            displayField : 'firm',
-            valueField : 'id',
-            pageSize : pageSize,
-            mode: 'remote',
-            typeAhead :true,
-            typeAheadDelay: 20,
-            minChars  : 3,
-            name : 'country',
-            labelAlign : 'top',
-            cls : 'field-margin',
-            flex: 15
-        }, {
-            xtype : 'textfield',
-            fieldLabel : 'Nota',  
-            name : 'note',
-            labelAlign : 'top',
-            cls : 'field-margin',
-            flex : 4
-        },{
+	xtype: 'container',
+	layout: 'hbox',
+	items: [{
+	    xtype: 'textfield',
+	    fieldLabel: 'Name', 
+	    name: 'nome',
+	    labelAlign: 'top',
+	    cls: 'field-margin',
+	    flex: 3
+	}, {
+	    xtype: 'combo',
+	    fieldLabel:'Firm',
+	    store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
+	    displayField : 'firm',
+	    valueField : 'id',
+	    pageSize : pageSize,
+	    mode: 'remote',
+	    typeAhead :true,
+	    typeAheadDelay: 20,
+	    minChars  : 3,
+	    name : 'country',
+	    labelAlign : 'top',
+	    cls : 'field-margin',
+	    flex: 15
+	}, {
+	    xtype : 'textfield',
+	    fieldLabel : 'Nota',  
+	    name : 'note',
+	    labelAlign : 'top',
+	    cls : 'field-margin',
+	    flex : 4
+	},{
 						xtype:'textfield',
 						fieldLabel:'Cla',
 						name:'cla',
 						labelAlign: 'top',
-            cls: 'field-margin',
-            flex: 2
-          }]
+	    cls: 'field-margin',
+	    flex: 2
+	  }]
     },
     {
-        xtype: 'container',
-        layout: 'hbox',
-        items:[
-        {
+	xtype: 'container',
+	layout: 'hbox',
+	items:[
+	{
 						xtype:'textfield',
 						fieldLabel:'E-Mail',
 						name:'email',
 						labelAlign: 'top',
-            cls: 'field-margin',
-            flex: 2
-          },
+	    cls: 'field-margin',
+	    flex: 2
+	  },
 								{
 									xtype:'textfield',
 									fieldLabel:'Telefono',
@@ -155,9 +156,9 @@ Ext.namespace('BB');
 								}
 							]
 		},{
-        xtype: 'container',
-        layout: 'hbox',
-        items:[
+	xtype: 'container',
+	layout: 'hbox',
+	items:[
 								{
 									xtype : 'textfield',
 									fieldLabel : 'Back Office',
@@ -233,22 +234,22 @@ Ext.namespace('BB');
 
 
 														}
-                        },
-                        {
+			},
+			{
 													xtype: 'button',
 													text:'filtra contatti',
 													icon: 'media/filter.png',
 													handler: function(){
 														ContactFilterForm()
 													}
-                        
-                        
+			
+			
 												},
 												{
-                            xtype : 'button',
-                            icon : 'media/nofilter.png',
-                            text : 'Reset Filter',
-                            handler : function() {
+			    xtype : 'button',
+			    icon : 'media/nofilter.png',
+			    text : 'Reset Filter',
+			    handler : function() {
 															// resetto i campi della form
 															contactsFilterParameter = {}
 															var filteredStore = Ext.data.StoreManager.lookup('bbContactsStore')
@@ -266,16 +267,29 @@ Ext.namespace('BB');
 																			showUsers()
 																		}
 												}
-                ],
-        displayMsg: 'Visualizzo i contatti {0} - {1} su un totale di {2}',
-            emptyMsg: "Nessun contatto da visualizzare",
-            totalProperty:'total',
-        displayInfo: true}],
-        columns:
+		],
+	displayMsg: 'Visualizzo i contatti {0} - {1} su un totale di {2}',
+	    emptyMsg: "Nessun contatto da visualizzare",
+	    totalProperty:'total',
+	displayInfo: true}],
+	columns:
 								[
 									{
 											header: 'Firm',
 											dataIndex: 'firm',
+									},
+									{
+										header:'Nome',
+										name: 'nome contatto',
+										dataIndex: 'nome'
+									},
+									{
+										header: 'Email',
+										dataIndex: 'email',
+									},
+									{
+										header:'Telefono',
+										dataIndex:'telefono'
 									},
 									{
 										header: 'Data Inserimento',
@@ -286,21 +300,6 @@ Ext.namespace('BB');
 											header: 'Note',
 											dataIndex: 'note',
 											flex:2
-									},
-									{
-										name:'Cla',
-										header:'Cla',
-										dataIndex: 'cla',
-										flex: 1
-									},
-									{
-										header:'Nome',
-										name: 'nome contatto',
-										dataIndex: 'nome'
-									},
-									{
-										header: 'Email',
-										dataIndex: 'email',
 									},
 									{
 										name:'comp',
@@ -320,47 +319,35 @@ Ext.namespace('BB');
 										}
 									},
 									{
-										header:'Telefono',
-										dataIndex:'telefono'
-									},
-									{
 										header:'Tipo',
 										dataIndex:'type'
 									},
 									{
-										header:'Linee',
-										dataIndex:'Linee'
-									},
-									{
-										header:'SSI',
-										dataIndex:'ssi'
-									},
-									{
-										header:'Back Office',
-										dataIndex:'back_office'
-									},
-									{
-										header:'Mail Back Office',
-										dataIndex:'mail_back_office'
-									},
-									{
-										header:'numero back office',
-										dataIndex:'numero_back_office'
-									},
-									{
-										header:'Altri Colleghi',
-										dataIndex:'collegues'
-									},
-									{
 										header:'Paese',
 										dataIndex:'paese'
+									},
+									{
+										header:'Isin',
+										dataIndex: 'isin'
+									},
+									{
+										header:'Price',
+										dataIndex: 'price'
+									},
+									{
+										header:'Size',
+										dataIndex: 'size'
+									},
+									{
+										header:'Data',
+										dataIndex: 'data'
 									}
 								],
-        //columns: columns,
+	//columns: columns,
 			border: false,
 			forceFit: true,
 			columnLines: true,
-        //renderTo: Ext.getBody()
+	//renderTo: Ext.getBody()
 			});//ends contactsGrid
 			
 function contactForm(contact)
@@ -422,25 +409,25 @@ function contactForm(contact)
 								}
 							],
     items: [{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [{
-            xtype: 'textfield',
-            fieldLabel: 'Name', 
-            name: 'nome',
-            labelAlign: 'top',
-            cls: 'field-margin',
-            flex: 3
-        }, {
-            xtype: 'combo',
-            fieldLabel:'Firm',
-            name : 'firm_id',
-            store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
-            displayField : 'firm',
-            valueField : 'id',
-            initialValue : contact.firm_id,
-            pageSize : pageSize,
-            listeners:{
+	xtype: 'container',
+	layout: 'hbox',
+	items: [{
+	    xtype: 'textfield',
+	    fieldLabel: 'Name', 
+	    name: 'nome',
+	    labelAlign: 'top',
+	    cls: 'field-margin',
+	    flex: 3
+	}, {
+	    xtype: 'combo',
+	    fieldLabel:'Firm',
+	    name : 'firm_id',
+	    store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
+	    displayField : 'firm',
+	    valueField : 'id',
+	    initialValue : contact.firm_id,
+	    pageSize : pageSize,
+	    listeners:{
 												afterrender: function(){
 													console.debug(this)
 													this.store.load()
@@ -449,41 +436,41 @@ function contactForm(contact)
 													console.debug(defaultValue)
 												}
 											},
-           // mode: 'remote',
-            typeAhead :true,
-            typeAheadDelay: 20,
-            minChars  : 3,
-            labelAlign : 'top',
-            cls : 'field-margin',
-            flex: 15
-        }, {
-            xtype : 'textfield',
-            fieldLabel : 'Nota',  
-            name : 'note',
-            labelAlign : 'top',
-            cls : 'field-margin',
-            flex : 4
-        },{
+	   // mode: 'remote',
+	    typeAhead :true,
+	    typeAheadDelay: 20,
+	    minChars  : 3,
+	    labelAlign : 'top',
+	    cls : 'field-margin',
+	    flex: 15
+	}, {
+	    xtype : 'textfield',
+	    fieldLabel : 'Nota',  
+	    name : 'note',
+	    labelAlign : 'top',
+	    cls : 'field-margin',
+	    flex : 4
+	},{
 						xtype:'textfield',
 						fieldLabel:'Cla',
 						name:'cla',
 						labelAlign: 'top',
-            cls: 'field-margin',
-            flex: 2
-          }]
+	    cls: 'field-margin',
+	    flex: 2
+	  }]
     },
     {
-        xtype: 'container',
-        layout: 'hbox',
-        items:[
-        {
+	xtype: 'container',
+	layout: 'hbox',
+	items:[
+	{
 						xtype:'textfield',
 						fieldLabel:'E-Mail',
 						name:'email',
 						labelAlign: 'top',
-            cls: 'field-margin',
-            flex: 2
-          },
+	    cls: 'field-margin',
+	    flex: 2
+	  },
 								{
 									xtype:'textfield',
 									fieldLabel:'Telefono',
@@ -501,9 +488,9 @@ function contactForm(contact)
 								}
 							]
 		},{
-        xtype: 'container',
-        layout: 'hbox',
-        items:[
+	xtype: 'container',
+	layout: 'hbox',
+	items:[
 								{
 									xtype : 'textfield',
 									fieldLabel : 'Back Office',
@@ -615,7 +602,7 @@ contactWindow = Ext.create('Ext.window.Window',
 								region: 'center',
 								items:formPanel
 							}
-    
+
 });
 formPanel.getForm().setValues(contact)
 contactWindow.show();
@@ -625,13 +612,13 @@ contactWindow.show();
 Ext.define('BB.contactsPanel', {
 				extend: 'Ext.panel.Panel',
 				alias:'widget.bb-contacts',
-        store: Ext.data.StoreManager.lookup('bbContactsStore'),
-        layout: 'fit',
-        items:ContactsGrid,
+	store: Ext.data.StoreManager.lookup('bbContactsStore'),
+	layout: 'fit',
+	items:ContactsGrid,
 			border: true,
 			forceFit: true,
 			columnLines: true,
-        //renderTo: Ext.getBody()
-    });
+	//renderTo: Ext.getBody()
+});
     
 

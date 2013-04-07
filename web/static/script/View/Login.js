@@ -1,7 +1,5 @@
 function loadData(user){
 	console.log('loadData')
-	console.debug(user)
-	console.debug(Ext.get('utenti-button'))
 	Ext.get('utenti-button').setVisible(user.isAdmin())
 	
 	if (user.isLogged()){

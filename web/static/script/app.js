@@ -77,15 +77,7 @@ Ext.onReady(function()
 		id: 'viewport',
 		layout: 'border',
 		items:
-		[{
-			region: 'north',
-			margins: '0 0 0 0',
-			border: false,
-			padding: '5 10 5 10',
-			bodyCls: 'x-border-layout-ct', // Uses the neutral background color
-			contentEl: 'header',
-			height: 150
-		},// ends header item
+		[// ends header item
 		/*{
 				region: 'east',
 				layout: 'fit',

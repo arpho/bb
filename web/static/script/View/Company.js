@@ -61,14 +61,21 @@ Ext.namespace('BB');
         columns:
 								[
 									{
+										header:'P',
+										dataIndex:'p'
+									},
+									{
+										header:'C',
+										dataIndex:'c'
+									},
+									{
 											header: 'Firm',
 											dataIndex: 'firm',
 											flex:4
 									},
 									{
-										header: 'Data Inserimento',
-										dataIndex: 'data',
-										flex: 1
+										header:'Paese',
+										dataIndex:'paese'
 									},
 									{
 											header: 'Note',
@@ -76,25 +83,17 @@ Ext.namespace('BB');
 											flex:4
 									},
 									{
-										header : 'Email',
-										dataIndex : 'email',
-									},
-									{
-										header : 'Web Site',
-										dataIndex : 'website'
-									},
-
-									{
-										header:'Telefono',
-										dataIndex:'telefono'
-									},
-									{
 										header:'Tipo',
 										dataIndex:'type'
 									},
 									{
-										header:'Paese',
-										dataIndex:'paese'
+										header:'Linee',
+										dataIndex:'linee'
+									},
+									{
+										header: 'Data',
+										dataIndex: 'data',
+										flex: 1
 									}
 								],
         //columns: columns,
@@ -271,50 +270,16 @@ function companyForm(company)
 											cls: 'field-margin',
 											flex: 1
 									},
+									{
+											xtype: 'textfield',
+											fieldLabel: 'Linee',  
+											name: 'linee',
+											labelAlign: 'top',
+											cls: 'field-margin',
+											flex: 1
+									},
 									]
 			},
-			{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [
-									{
-											xtype: 'textfield',
-											fieldLabel: 'Email',  
-											name: 'email',
-											labelAlign: 'top',
-											cls: 'field-margin',
-											flex: 1
-									},
-							]
-			},// chiude secondo container
-			{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [
-									{
-											xtype: 'textfield',
-											fieldLabel: 'Telefono',  
-											name: 'telefono',
-											labelAlign: 'top',
-											cls: 'field-margin',
-											flex: 1
-									},
-							]
-			},
-			{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [
-									{
-											xtype: 'textfield',
-											fieldLabel: 'Sito Internet',  
-											name: 'website',
-											labelAlign: 'top',
-											cls: 'field-margin',
-											flex: 1
-									},
-							]
-			}
 		]
 });
 function setTitleCompany(company){
@@ -330,7 +295,7 @@ function setTitleCompany(company){
 	{
 		title: setTitleCompany(company),
 		height: 400,
-		width:450,
+		width:1300,
     layout: 'border',
     items: {
 							region: 'center',

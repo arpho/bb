@@ -1,14 +1,19 @@
 Ext.namespace('BB');
 Ext.define('Company',
 	{
-    extend: 'Ext.data.Model',
-    fields: [
+	extend: 'Ext.data.Model',
+	fields: [
 			{
 					name :  'id',
 					type : 'string'
 			},
 			{
 				name :'firm'
+			},{
+				name : 'c'
+			},
+			{
+				name : 'c'
 			},
 			{
 				name : 'data'
@@ -33,11 +38,11 @@ Ext.define('Company',
 			}
 			
 			
-    ],
-    proxy : {
-        type : 'rest',
-        url : 'data/companies/'
-    }
+	],
+	proxy : {
+		type : 'rest',
+		url : 'data/companies/'
+	}
 
 	}
 	);
