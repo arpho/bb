@@ -10,7 +10,7 @@ Ext.namespace('BB');
 					 itemcontextmenu: function(view, rec, node, index, event) {
 							event.stopEvent(); // stops the default event. i.e. Windows Context Menu
 							var gridContextMenu = Ext.create('Ext.menu.Menu', {
-									items: [{ text: 'Isin', handler: function(){showIsins(rec.data)},icon: 'media/modifica.png'},
+									items: [{ text: 'Isin', handler: function(){showIsins(rec.data)},icon: 'media/coins.png'},
 									{ text: 'Modifica', handler: function(){contactForm(rec.data)},icon: 'media/modifica.png'},
 									{
 										text:'cancella',
@@ -57,12 +57,12 @@ Ext.namespace('BB');
 	items: [
 			
 			{
-			    xtype: 'button',
-			    icon: 'media/addcontact.png',
-			    text: 'aggiungi contatto',
-			    handler: function()
-			    { contactForm(
-			    {
+				xtype: 'button',
+				icon: 'media/addcontact.png',
+				text: 'aggiungi contatto',
+				handler: function()
+				{ contactForm(
+				{
 															_id : 1,
 															Firm : 'Firm',
 															nome : 'nome',
@@ -80,7 +80,7 @@ Ext.namespace('BB');
 															ssi : 'ssi',
 															linee : 'linee',
 															paese : 'paese'
-														}
+				}
 			    )
 															
 															var formPanel = Ext.create('Ext.form.Panel', {
@@ -399,9 +399,9 @@ function contactForm(contact)
 															}
 														
 	var formPanel = Ext.create('Ext.form.Panel', {
-    style: 'margin: 50px',
-    height: 370,
-    buttons: [
+					    style: 'margin: 50px',
+					    height: 370,
+					    buttons: [
 								{
 									text: setButtonText(contact),
 									handler: submitForm,

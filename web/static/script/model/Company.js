@@ -10,13 +10,17 @@ Ext.define('Company',
 			{
 				name :'firm'
 			},{
-				name : 'c'
+				name : 'p'
+			},
+			{
+				name: 'linee'
 			},
 			{
 				name : 'c'
 			},
 			{
-				name : 'data'
+				name : 'data',
+				type: 'date'
 			},
 			{
 				name :'note'

@@ -60,14 +60,15 @@ Ext.namespace('BB');
         displayInfo: true}],
         columns:
 								[
-									{
-										header:'P',
-										dataIndex:'p'
-									},
-									{
-										header:'C',
-										dataIndex:'c'
-									},
+								{
+									header : 'P',
+									dataIndex:'p'
+								},
+								{
+									header : 'C',
+									dataIndex : 'c'
+								},
+									
 									{
 											header: 'Firm',
 											dataIndex: 'firm',
@@ -78,9 +79,9 @@ Ext.namespace('BB');
 										dataIndex:'paese'
 									},
 									{
-											header: 'Note',
-											dataIndex: 'note',
-											flex:4
+										header : 'Note',
+										dataIndex : 'note',
+										flex:5
 									},
 									{
 										header:'Tipo',
@@ -91,10 +92,10 @@ Ext.namespace('BB');
 										dataIndex:'linee'
 									},
 									{
-										header: 'Data',
-										dataIndex: 'data',
-										flex: 1
-									}
+										header:'Data',
+										dataIndex:'data',
+										renderer: Ext.util.Format.dateRenderer('Y-m-d')
+									},
 								],
         //columns: columns,
 			border: false,
@@ -171,13 +172,16 @@ function companyForm(company)
 {
 	var submitForm = function()
 															{
-																var firmField = formPanel.items.get(0).items.get(0);
-																var countryField = formPanel.items.get(0).items.get(1);
-																var noteField = formPanel.items.get(0).items.get(2);
-																var typeField =  formPanel.items.get(0).items.get(3);
-																var mailField = formPanel.items.get(1).items.get(0)
-																var telefonoField = formPanel.items.get(2).items.get(0)
-																var webField = formPanel.items.get(3).items.get(0)
+																var pField =  formPanel.items.get(0).items.get(0);
+																var cField =  formPanel.items.get(0).items.get(1);
+																var firmField = formPanel.items.get(0).items.get(2);
+																var countryField = formPanel.items.get(0).items.get(3);
+																var noteField = formPanel.items.get(0).items.get(4);
+																var typeField =  formPanel.items.get(0).items.get(5);
+																var lineeField =  formPanel.items.get(0).items.get(6);
+																var mailField = null// formPanel.items.get(1).items.get(0)
+																var telefonoField = null// formPanel.items.get(2).items.get(0)
+																var webField = null// formPanel.items.get(3).items.get(0)
 																function getId(c){
 																	var id
 																	if (null != c.id){
@@ -187,8 +191,9 @@ function companyForm(company)
 																	return id
 																}
 																var Company = Ext.ModelManager.create({firm: firmField.getValue(), note: noteField.getValue(),
-																'paese':countryField.getValue(),type:typeField.getValue(),email:mailField.getValue(),
-																telefono:telefonoField.getValue(),website:webField.getValue(),id:getId(company)}, 'Company');
+																'paese':countryField.getValue(),type:typeField.getValue(),'c':cField.getValue()
+																,'p':pField.getValue(),'linee':lineeField.getValue(),
+																id:getId(company)}, 'Company');
 																Company.save()
 																Ext.data.StoreManager.lookup('bbCompaniesStore').load
 																companyWindow.close()
@@ -225,7 +230,9 @@ function companyForm(company)
     //title: 'Add new Company',
 
     //renderTo: Ext.getBody(),
-		style: 'margin: 50px',
+		style: 'margin: 5px',
+		height: 100,
+		width : 1100,
 		buttons: [
 								{
 										text: setTextButton(company),
@@ -239,6 +246,22 @@ function companyForm(company)
 					xtype: 'container',
 					layout: 'hbox',
 					items: [
+										{
+												xtype: 'textfield',
+												fieldLabel: 'P', 
+												name: 'p',
+												labelAlign: 'top',
+												cls: 'field-margin',
+												flex: 1
+										},
+										{
+												xtype: 'textfield',
+												fieldLabel: 'C', 
+												name: 'c',
+												labelAlign: 'top',
+												cls: 'field-margin',
+												flex: 1
+										},
 										{
 												xtype: 'textfield',
 												fieldLabel: 'Firm', 
@@ -271,7 +294,18 @@ function companyForm(company)
 											flex: 1
 									},
 									{
-											xtype: 'textfield',
+											xtype:'combo',
+							store:{fields: ['key','label'], 
+								data: [
+									{key:'aperto',label: 'aperto'},
+									{key:'hot',label: 'hot'}, 
+									{key:'bridge', label:'bridge'},
+									{key:'tradato', label:'tradato'}
+									
+								]
+							},
+											displayField : 'label',
+											valueField : 'key',
 											fieldLabel: 'Linee',  
 											name: 'linee',
 											labelAlign: 'top',
@@ -280,6 +314,48 @@ function companyForm(company)
 									},
 									]
 			},
+			{
+        xtype: 'container',
+        layout: 'hbox',
+        items: [
+									{
+											xtype: 'textfield',
+											fieldLabel: 'Email',  
+											name: 'email',
+											labelAlign: 'top',
+											cls: 'field-margin',
+											flex: 1
+									},
+							]
+			},// chiude secondo container
+			{
+        xtype: 'container',
+        layout: 'hbox',
+        items: [
+									{
+											xtype: 'textfield',
+											fieldLabel: 'Telefono',  
+											name: 'telefono',
+											labelAlign: 'top',
+											cls: 'field-margin',
+											flex: 1
+									},
+							]
+			},
+			{
+        xtype: 'container',
+        layout: 'hbox',
+        items: [
+									{
+											xtype: 'textfield',
+											fieldLabel: 'Sito Internet',  
+											name: 'website',
+											labelAlign: 'top',
+											cls: 'field-margin',
+											flex: 1
+									},
+							]
+			}
 		]
 });
 function setTitleCompany(company){
@@ -294,8 +370,8 @@ function setTitleCompany(company){
 	companyWindow = Ext.create('Ext.window.Window',
 	{
 		title: setTitleCompany(company),
-		height: 400,
-		width:1300,
+		height: 150,
+		width:1140,
     layout: 'border',
     items: {
 							region: 'center',

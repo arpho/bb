@@ -17,7 +17,11 @@ Ext.define('Isin',
 				name :'size'
 			},
 			{
-				name :'data'
+				name :'data',
+				type: 'date'
+			},
+			{
+				name : 'contact_id'
 			}
 		],
 	proxy : {

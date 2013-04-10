@@ -1,6 +1,13 @@
 var contactsFilterParameter = null
 
 function addParameter(keyParameter,valueCheck,value){
+	/*
+	 * @param keyParameter: chiave del parametro
+	 * @valuecheck: valore di controllo
+	 * @param opzionale, valore di default
+	 * aggiunge agli extraparams dello store, il parametro keyparameter se il valore inserito nella form è diverso dal valore di controllo valuecheck
+	 * di
+	 * */
 	if (this.form[keyParameter]!=valueCheck){
 		this.store.getProxy().extraParams[keyParameter] = (null!=value)?value:this.form[keyParameter]
 	}
@@ -10,6 +17,7 @@ function filterMaker(store,form){
 	this.form=form
 	this.addParameter=addParameter
 }
+
 function ContactFilterForm()
 {
 
@@ -21,11 +29,10 @@ function ContactFilterForm()
 			contactsFilterParameter = ContactFormList.getForm().getValues() 
 			var parametersAdder = new filterMaker(store,contactsFilterParameter)
 			/* memorizzo
-			
 			// i valori dei campi in una variabile che viene usata per ripristinare i valori dei campi quando riapro la form*/
-			//console.debug(contactsFilterParameter)
 			parametersAdder.addParameter('firm',null)
 			parametersAdder.addParameter('nome')
+			parametersAdder.addParameter('isin')
 			parametersAdder.addParameter('ml','dnc')
 			parametersAdder.addParameter('comp','dnc')
 			if (contactsFilterParameter.comp!='dnc'){
@@ -236,9 +243,8 @@ function ContactFilterForm()
 						items:
 						[{
 									xtype: 'textfield',
-									fieldLabel:"Website",
-									name:'website',
-									fieldLabel: "website",
+									fieldLabel:"Isin",
+									name:'isin',
 									labelAlign: 'top',
 									cls: 'filter-margin'
 								}

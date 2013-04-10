@@ -37,21 +37,94 @@ function addParameter(name,value){
 		this.list.push(a)
 	}
 	}
+function addParameterNoRegex(name,value){
+	if(value){
+		//return JSON.to(name, true)
+		var a = {}
+		a[name.toString()] = value
+		this.list.push(a)
+	}
+	}
 	
 function FilterMaker(list){
 	this.list = list
 	this.makeFilter =makeFilter
 	this.addParameter = addParameter
 }
+function FilterMakerNoRegex(list){
+	this.list = list
+	this.makeFilter =makeFilter
+	this.addParameter = addParameterNoRegex
+}
+
+function handlePost(conversation)
+{
+	var connection = application.globals.get('mongoDbConnection')
+		if (null === connection) {
+			try {
+				connection = MongoDB.connect('127.0.0.1')
+				application.globals.put('mongoDbConnection', connect) 
+			}
+			catch (x) {
+			}
+		}
+		var firm = conversation.query.get('firm')
+		var databaseName = 'node-mongo-bb'//databaseNames[d]
+					var database = connection.getDB(databaseName)
+					var children = []
+					var systemChildren = []
+					var collectionNames = database.collectionNames.toArray()
+					var connection = new MongoDB.connect('127.0.0.1')
+					var collection = new MongoDB.Collection('contacts', {db: database, connection: connection})
+					var text =conversation.entity.text
+					var data = JSON.from(text, true)
+					var contact = {}
+					contact.nome= data.nome
+					contact.firm = data.firm
+					contact.note = data.note
+					contact.paese = data.paese
+					contact.type = data.type
+					contact.email = data.email
+					contact.telefono = data.telefono
+					contact.c = data.c
+					contact.p = data.p
+					//contact.linee = data.linee
+					contact.telefono = data.telefono
+					contact.email = data.email
+					contact.comp = data.comp
+					contact.type = data.type
+					contact.comp = data.comp
+					contact.ml = data.ml
+					contact.firm_id = data.firm_id
+					contact.paese = data.paese
+					
+					dateObj = new Date()
+					var today
+					var dd = dateObj.getDate();
+					var mm = dateObj.getMonth()+1;
+					var yyyy = dateObj.getFullYear();
+					if(dd<10)
+					{dd='0'+dd}
+					if(mm<10)
+					{mm='0'+mm}
+					today = mm+'/'+dd+'/'+yyyy
+					contact.data = today
+					collection.insert(contact)
+	//return "{firm: 'Ed Spencer', note: 'ed@sencha.com','paese':'it'}"
+	return JSON.to(contact,true)
+}
+
 function handleGet(conversation) {
 	var lista_parametri = []
 	var filterMaker= new FilterMaker(lista_parametri)
+	var filterMakerNoRegex= new FilterMakerNoRegex(lista_parametri)
 	var limit = conversation.query.get('limit')
 	var start = conversation.query.get('start')
 	var node = conversation.query.get('node')
 	var firm_id = conversation.query.get('firm_id')
 	var firm_filter = conversation.query.get('firm')
 	var nome = conversation.query.get('nome')
+	var isin = conversation.query.get('isin')
 	var paese = conversation.query.get('paese')
 	var ssi = conversation.query.get('ssi')
 	var tipo = conversation.query.get('tipo')
@@ -71,8 +144,7 @@ function handleGet(conversation) {
 	filterMaker.addParameter('Linee',linee)
 	filterMaker.addParameter('type',tipo)
 	filterMaker.addParameter('firm_id',firm_filter)
-	
-
+	filterMakerNoRegex.addParameter('isin.isin',isin)
 	var nodes = []
 	
 	//if (node == 'root') 

@@ -258,6 +258,9 @@ function handlePost(conversation)
 					company.email = data.email
 					company.telefono = data.telefono
 					company.website = data.website
+					company.c = data.c
+					company.p = data.p
+					company.linee = data.linee
 					dateObj = new Date()
 					var today
 					var dd = dateObj.getDate();

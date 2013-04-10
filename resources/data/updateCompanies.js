@@ -56,7 +56,9 @@ function handlePut(conversation)
 		company.email = data.email
 		company.telefono = data.telefono
 		company.website = data.website
-		//return JSON.to(contact,true)
+		company.c = data.c
+		company.p = data.p
+		company.linee = data.linee
 						//return JSON.to('update',true)
 		collection.update({"_id" : new org.bson.types.ObjectId(Id)},{$set:company})
 					
