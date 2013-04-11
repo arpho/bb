@@ -1,22 +1,40 @@
 Ext.namespace('BB');
 
+var linkButton = new Ext.LinkButton({
+	id: 'grid-excel-button',
+	text: 'Export to Excel'
+});
+
 	var CompanyGrid = Ext.create('Ext.grid.Panel',{
-        title: 'Aziende',
-        viewConfig      : {
+	title: 'Aziende',
+		viewConfig: {
 											style : { overflow: 'auto', overflowX: 'hidden' }
 										},
-        store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
-        dockedItems:[{xtype: 'pagingtoolbar',
-        store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
-        
-        dock: 'bottom',
-        items:[
-        {
-                            xtype: 'button',
-                            icon: 'media/addcompany.png',
-                            text: 'aggiungi azienda',
-                            handler: function()
-                            {  companyForm(//carico la  form con dati di default
+		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
+		dockedItems:[{xtype: 'pagingtoolbar',
+		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
+		
+		dock: 'bottom',
+		items:[{xtype:'button',text:'export excel',
+		id:'linkButton',
+		template:new Ext.Template(
+				'<table border="0" cellpadding="0" cellspacing="0" class="x-btn-wrap"><tbody><tr>',
+				'<td class="x-btn-left"><i> </i></td><td class="x-btn-center"><a class="x-btn-text" href="{1}" target="{2}">{0}</a></td><td class="x-btn-right"><i> </i></td>',
+				"</tr></tbody></table>"),
+		handler:function(){
+			console.debug(this)
+			this.url = 'data:application/vnd.ms-excel;base64,' +
+			Base64.encode(CompanyGrid.getExcelXml());
+			console.debug(this.url)
+			window.location = this.url
+		}
+		},
+		{
+						    xtype: 'button',
+						    icon: 'media/addcompany.png',
+						    text: 'aggiungi azienda',
+						    handler: function()
+						    {  companyForm(//carico la  form con dati di default
 															{
 																_id: 5,
 																Firm : 'Firm',
@@ -28,7 +46,8 @@ Ext.namespace('BB');
 																email: ' arpho@live.co.uk'
 															})
 														}
-			},{
+			},
+			{
 					xtype:'button',
 					text: 'Filtra aziende',
 					icon: 'media/filter.png',
@@ -38,11 +57,11 @@ Ext.namespace('BB');
 				
 				},
 			{
-                            xtype: 'button',
-                            
-                            text: 'Reset Filter',
-                            icon : 'media/nofilter.png',
-                            handler: function() {
+						    xtype: 'button',
+						    
+						    text: 'Reset Filter',
+						    icon : 'media/nofilter.png',
+						    handler: function() {
 															// resetto i campi della form
 															companiesFilterParameter = {}
 															var filteredStore = Ext.data.StoreManager.lookup('bbCompaniesStore')
@@ -50,15 +69,15 @@ Ext.namespace('BB');
 					filteredStore.getProxy().extraParams = {}
 					filteredStore.load()
 														}
-                        },
-        ],
+						},
+		],
 
-        
-        
-        displayMsg: 'Visualizzo le aziende {0} - {1} su un totale di {2}',
-            emptyMsg: "Nessuna azienda da visualizzare",
-        displayInfo: true}],
-        columns:
+		
+		
+		displayMsg: 'Visualizzo le aziende {0} - {1} su un totale di {2}',
+		    emptyMsg: "Nessuna azienda da visualizzare",
+		displayInfo: true}],
+		columns:
 								[
 								{
 									header : 'P',
@@ -97,7 +116,7 @@ Ext.namespace('BB');
 										renderer: Ext.util.Format.dateRenderer('Y-m-d')
 									},
 								],
-        //columns: columns,
+		//columns: columns,
 			border: false,
 			forceFit: true,
 			columnLines: true,
@@ -157,15 +176,18 @@ Ext.namespace('BB');
 						},
 			}
 		
-        //renderTo: Ext.getBody()
+		//renderTo: Ext.getBody()
 			});
+/* linkButton.getEl().child('a', true).href = 'data:application/vnd.ms-excel;base64,' +
+Base64.encode(CompanyGrid.getExcelXml());*/
+ 
  Ext.define('BB.companiesPanel',
   {
 				extend: 'Ext.panel.Panel',
 				alias:'widget.bb-companies',
-        store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
-        layout: 'fit',
-        items: CompanyGrid,
+		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
+		layout: 'fit',
+		items: CompanyGrid,
     });
 
 function companyForm(company)
@@ -315,9 +337,9 @@ function companyForm(company)
 									]
 			},
 			{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [
+		xtype: 'container',
+		layout: 'hbox',
+		items: [
 									{
 											xtype: 'textfield',
 											fieldLabel: 'Email',  
@@ -329,9 +351,9 @@ function companyForm(company)
 							]
 			},// chiude secondo container
 			{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [
+		xtype: 'container',
+		layout: 'hbox',
+		items: [
 									{
 											xtype: 'textfield',
 											fieldLabel: 'Telefono',  
@@ -343,9 +365,9 @@ function companyForm(company)
 							]
 			},
 			{
-        xtype: 'container',
-        layout: 'hbox',
-        items: [
+		xtype: 'container',
+		layout: 'hbox',
+		items: [
 									{
 											xtype: 'textfield',
 											fieldLabel: 'Sito Internet',  

@@ -4,11 +4,12 @@ Ext.define('Company',
 	extend: 'Ext.data.Model',
 	fields: [
 			{
-					name :  'id',
-					type : 'string'
+				name :  'id',
+				type : 'string'
 			},
 			{
-				name :'firm'
+				name :'firm',
+				type : 'string'
 			},{
 				name : 'p'
 			},
