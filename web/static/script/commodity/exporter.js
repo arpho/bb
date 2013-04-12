@@ -100,6 +100,8 @@ Ext.override(Ext.grid.GridPanel, {
 		getExcelXml: function(includeHidden) {
 				var worksheet = this.createWorksheet(includeHidden);
 				var totalWidth = totalWidthInPixels//this.getColumnModel().getTotalWidth(includeHidden);
+				console.log('this in exporter')
+				console.log(this)
 				return '<?xml version="1.0" encoding="utf-8"?>' +
 						'<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:o="urn:schemas-microsoft-com:office:office">' +
 						'<o:DocumentProperties><o:Title>' + this.title + '</o:Title></o:DocumentProperties>' +
@@ -245,7 +247,6 @@ Ext.override(Ext.grid.GridPanel, {
 								if (includeHidden || !cm[j].isHidden()) {
 									
 										var v = r[cm[j].dataIndex];
-										console.log(cm[j])
 										t += '<ss:Cell ss:StyleID="' + cellClass + cellTypeClass[k] + '"><ss:Data ss:Type="' + cellType[k] + '">';
 												if (cellTypeClass[k] == 'DateTime') {
 														t += v.format('Y-m-d');

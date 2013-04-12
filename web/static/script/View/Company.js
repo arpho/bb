@@ -8,7 +8,7 @@ var linkButton = new Ext.LinkButton({
 	var CompanyGrid = Ext.create('Ext.grid.Panel',{
 	title: 'Aziende',
 		viewConfig: {
-											style : { overflow: 'auto', overflowX: 'hidden' }
+											style : { overflow: 'auto'}
 										},
 		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
 		dockedItems:[{xtype: 'pagingtoolbar',
@@ -17,7 +17,7 @@ var linkButton = new Ext.LinkButton({
 		dock: 'bottom',
 		items:[{xtype:'button',text:'export excel',
 		id:'linkButton',
-		icon: 'media/excel.bmp',
+		icon: 'media/excel.png',
 		template:new Ext.Template(
 				'<table border="0" cellpadding="0" cellspacing="0" class="x-btn-wrap"><tbody><tr>',
 				'<td class="x-btn-left"><i> </i></td><td class="x-btn-center"><a class="x-btn-text" href="{1}" target="{2}">{0}</a></td><td class="x-btn-right"><i> </i></td>',

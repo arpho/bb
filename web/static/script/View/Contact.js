@@ -55,7 +55,18 @@ Ext.namespace('BB');
 	store: Ext.data.StoreManager.lookup('bbContactsStore'),
 	dock: 'bottom',
 	items: [
-			
+			{xtype:'button',text:'export excel',
+		icon: 'media/excel.png',
+		template:new Ext.Template(
+				'<table border="0" cellpadding="0" cellspacing="0" class="x-btn-wrap"><tbody><tr>',
+				'<td class="x-btn-left"><i> </i></td><td class="x-btn-center"><a class="x-btn-text" href="{1}" target="{2}">{0}</a></td><td class="x-btn-right"><i> </i></td>',
+				"</tr></tbody></table>"),
+		handler:function(){
+			this.url = 'data:application/vnd.ms-excel;base64,' +
+			Base64.encode(ContactsGrid.getExcelXml());
+			window.location = this.url
+		}
+		},
 			{
 				xtype: 'button',
 				icon: 'media/addcontact.png',

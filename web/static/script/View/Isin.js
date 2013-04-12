@@ -5,7 +5,7 @@ function showIsins(contact){
 	});
 	var store = Ext.data.StoreManager.lookup('bbIsinStore')
 	var IsinGrid = Ext.create('Ext.grid.Panel', {
-				title: 'isin',
+				title: contact.nome +' '+contact.firm+': Isin',
 				plugins: [
 					rowEditing
 				],
@@ -49,7 +49,18 @@ function showIsins(contact){
 				pageSize: pageSize,
 				store: Ext.data.StoreManager.lookup('bbIsinStore'),
 				dock: 'bottom',
-				items:[
+				items:[{xtype:'button',text:'export excel',
+		icon: 'media/excel.png',
+		template:new Ext.Template(
+				'<table border="0" cellpadding="0" cellspacing="0" class="x-btn-wrap"><tbody><tr>',
+				'<td class="x-btn-left"><i> </i></td><td class="x-btn-center"><a class="x-btn-text" href="{1}" target="{2}">{0}</a></td><td class="x-btn-right"><i> </i></td>',
+				"</tr></tbody></table>"),
+		handler:function(){
+			this.url = 'data:application/vnd.ms-excel;base64,' +
+			Base64.encode(IsinGrid.getExcelXml());
+			window.location = this.url
+		}
+		},
 					{
 						xtype: 'button',
 						icon: 'media/coins_add.png',
