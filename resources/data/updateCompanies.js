@@ -59,6 +59,17 @@ function handlePut(conversation)
 		company.c = data.c
 		company.p = data.p
 		company.linee = data.linee
+		dateObj = new Date()
+		var today
+		var dd = dateObj.getDate();
+		var mm = dateObj.getMonth()+1;
+		var yyyy = dateObj.getFullYear();
+		if(dd<10)
+		{dd='0'+dd}
+		if(mm<10)
+		{mm='0'+mm}
+		today = mm+'/'+dd+'/'+yyyy
+		company.data = today
 						//return JSON.to('update',true)
 		collection.update({"_id" : new org.bson.types.ObjectId(Id)},{$set:company})
 					

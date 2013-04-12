@@ -169,7 +169,7 @@ function handleGet(conversation) {
 					}
 					//return JSON.to(query,true)
 					
-					var cursor = collection.find(query).sort({'firm':1}).limit(limit).skip(start).toArray()
+					var cursor = collection.find(query).sort({'firm':1}).toArray()//var cursor = collection.find(query).sort({'firm':1}).limit(limit).skip(start).toArray()
 					//di default il campo _id  ritornato da mongodb ha questa forma _id:{$oid:id} quindi devoestrapolare lo id per poterlo usare nella grid di extjs
 					var companies = []
 					var dummy = null

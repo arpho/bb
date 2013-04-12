@@ -211,7 +211,7 @@ function handleGet(conversation) {
 						
 					}
 					//return JSON.to(lista_parametri, true)
-					var cursor_contacts = collection.find(query).sort({'nome':1}).limit(limit).skip(start).toArray()
+					var cursor_contacts = collection.find(query).sort({'nome':1}).toArray()//var cursor_contacts = collection.find(query).sort({'nome':1}).limit(limit).skip(start).toArray()
 					//return JSON.to(cursor_, true)
 					//return  JSON.to(cursor_contacts, true)
 					var contacts = []
