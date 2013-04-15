@@ -37,11 +37,12 @@ var linkButton = new Ext.LinkButton({
 		}
 		},
 		{
-						    xtype: 'button',
-						    icon: 'media/addcompany.png',
-						    text: 'aggiungi azienda',
-						    handler: function()
-						    {
+						xtype: 'button',
+						icon: 'media/addcompany.png',
+						text: 'aggiungi azienda',
+						handler: function()
+						{
+							rowEditing.cancelEdit();
 							var today = new Date();
 							var dd = today.getDate();
 							var mm = today.getMonth()+1; //January is 0!
@@ -51,13 +52,16 @@ var linkButton = new Ext.LinkButton({
 								data: today,
 							}, 'Company');
 							var store = Ext.data.StoreManager.lookup('bbCompaniesStore')
+							console.log('aggiungi')
+							console.log(company)
 							store.insert(0, company);
 							rowEditing.startEdit(0, 0)
 							CompanyGrid.on('edit', function() {
 								store.remove(company)
 								company.save()
+								//store.load()
 							})
-							store.load()
+							
 							/*companyForm(//carico la  form con dati di default
 															{
 																_id: 5,
@@ -69,7 +73,7 @@ var linkButton = new Ext.LinkButton({
 																website : 'www.firm.it',
 																email: ' arpho@live.co.uk'
 															})*/
-														}
+						}
 			},
 			{
 					xtype:'button',
@@ -203,13 +207,16 @@ var linkButton = new Ext.LinkButton({
 																{
 																	//companyForm(rec.data)
 																	var store = Ext.data.StoreManager.lookup('bbCompaniesStore')
-																	//store.insert(0, company);
 																	rowEditing.startEdit(index, 0)
-																	/*CompanyGrid.on('edit', function() {
+																	rec.data.id = rec.data.id +'/'
+																	CompanyGrid.on('edit', function() {
+																		var company = Ext.ModelManager.create(rec.data, 'Company')
+																		console.log(company)
 																		store.remove(company)
 																		company.save()
+																		store.load()
 																	})
-																	store.load()*/
+																	
 																},
 							icon: 'media/modifica.png'
 						},
