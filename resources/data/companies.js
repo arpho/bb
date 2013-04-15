@@ -43,6 +43,8 @@ function FilterMaker(list){
 }
 
 function handleGet(conversation) {
+	var p = conversation.query.get('p')
+	var c = conversation.query.get('c')
 	var node = conversation.query.get('node')
 	var note = conversation.query.get('note')
 	var limit = conversation.query.get('limit')
@@ -107,6 +109,18 @@ function handleGet(conversation) {
 						filter.$regex = note
 						filter.$options = 'i'
 						lista_parametri.push({'note':filter})
+					}
+					if (null!==p){
+						var filter = {}
+						filter.$regex = p
+						filter.$options = 'i'
+						lista_parametri.push({'p':filter})
+					}
+					if (null!==c){
+						var filter = {}
+						filter.$regex = c
+						filter.$options = 'i'
+						lista_parametri.push({'c':filter})
 					}
 					if (null!==telefono){
 						var filter = {}

@@ -36,7 +36,7 @@ var linkButton = new Ext.LinkButton({
 						    text: 'aggiungi azienda',
 						    handler: function()
 						    {  companyForm(//carico la  form con dati di default
-															{
+															/*{
 																_id: 5,
 																Firm : 'Firm',
 																country : 'paese',
@@ -45,7 +45,7 @@ var linkButton = new Ext.LinkButton({
 																telefono : '123456789',
 																website : 'www.firm.it',
 																email: ' arpho@live.co.uk'
-															})
+															}*/)
 														}
 			},
 			{
@@ -341,14 +341,6 @@ function companyForm(company)
 		xtype: 'container',
 		layout: 'hbox',
 		items: [
-									{
-											xtype: 'textfield',
-											fieldLabel: 'Email',  
-											name: 'email',
-											labelAlign: 'top',
-											cls: 'field-margin',
-											flex: 1
-									},
 							]
 			},// chiude secondo container
 			{

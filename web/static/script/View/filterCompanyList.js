@@ -36,6 +36,8 @@ function CompanyFilterForm()
 			parametersAdder.addParameter('paese')
 			parametersAdder.addParameter('tipo')
 			parametersAdder.addParameter('telefono')
+			parametersAdder.addParameter('c')
+			parametersAdder.addParameter('p')
 			if (companiesFilterParameter.somma){
 						store.getProxy().extraParams.somma = true
 			}
@@ -67,18 +69,10 @@ function CompanyFilterForm()
 																	fieldLabel: "Nota",
 																	labelAlign: 'top',
 																	cls: 'filter-margin'
-										},
-										{
+										},{
 																	xtype: 'textfield',
-																	name:'email',
-																	fieldLabel: "email",
-																	labelAlign: 'top',
-																	cls: 'filter-margin'
-										},
-										{
-																	xtype: 'textfield',
-																	name:'website',
-																	fieldLabel: "Web site",
+																	name:'p',
+																	fieldLabel: "P",
 																	labelAlign: 'top',
 																	cls: 'filter-margin'
 										},
@@ -104,8 +98,8 @@ function CompanyFilterForm()
 										},
 										{
 																	xtype: 'textfield',
-																	name:'telefono',
-																	fieldLabel: "Telefono",
+																	name:'c',
+																	fieldLabel: "C",
 																	labelAlign: 'top',
 																	cls: 'filter-margin'
 										},
@@ -113,7 +107,7 @@ function CompanyFilterForm()
 													xtype:'checkboxfield',
 													fieldLabel:'almeno un parametro',
 													name: 'somma',
-													labelAlign: 'left',
+													labelAlign: 'top',
 													cls: 'filter-or-margin',
 										}
 					]
@@ -126,7 +120,7 @@ function CompanyFilterForm()
 	filterWindow = Ext.create('Ext.window.Window',
 	{
 				title: 'Filtra Aziende',
-				height: 460,
+				height: 260,
 				width:650,
 				layout: 'border',
 				items:[
