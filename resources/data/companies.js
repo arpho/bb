@@ -57,6 +57,7 @@ function handleGet(conversation) {
 	var telefono = conversation.query.get('telefono')
 	var tipo = conversation.query.get('tipo')
 	var paese = conversation.query.get('paese')
+	var linee = conversation.query.get('linee')
 	//return JSON.to(tipo,true)
 	//return JSON.to(firm+'subito',true)
 	var nodes = []
@@ -115,6 +116,12 @@ function handleGet(conversation) {
 						filter.$regex = p
 						filter.$options = 'i'
 						lista_parametri.push({'p':filter})
+					}
+					if (null!==linee){
+						/*var filter = {}
+						filter.$regex = c
+						filter.$options = 'i'*/
+						lista_parametri.push({'linee':linee})
 					}
 					if (null!==c){
 						var filter = {}

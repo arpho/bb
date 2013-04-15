@@ -38,6 +38,7 @@ function CompanyFilterForm()
 			parametersAdder.addParameter('telefono')
 			parametersAdder.addParameter('c')
 			parametersAdder.addParameter('p')
+			parametersAdder.addParameter('linee')
 			if (companiesFilterParameter.somma){
 						store.getProxy().extraParams.somma = true
 			}
@@ -76,9 +77,30 @@ function CompanyFilterForm()
 																	labelAlign: 'top',
 																	cls: 'filter-margin'
 										},
-										
-								]
-			},{
+										{
+											//displayField : 'label',
+											//valueField : 'key',
+											xtype: 'combo',
+											store:{fields: ['key','label'], 
+											data: [
+												{key:'aperto',label: 'aperto'},
+												{key:'hot',label: 'hot'}, 
+												{key:'bridge', label:'bridge'},
+												{key:'tradato', label:'tradato'}
+									
+											]
+										},
+										displayField : 'label',
+										valueField : 'key',
+											name:'linee',
+											fieldLabel: "Linee",
+											labelAlign: 'top',
+											cls: 'filter-margin'
+								
+										}
+					]
+			},
+			{
 					xtype: 'container',
 					layout: 'hbox',
 					items:[
@@ -111,7 +133,7 @@ function CompanyFilterForm()
 													cls: 'filter-or-margin',
 										}
 					]
-				}
+			}
 		]
 	})
 	// fine CompanyFormlist

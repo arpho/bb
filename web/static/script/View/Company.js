@@ -4,13 +4,19 @@ var linkButton = new Ext.LinkButton({
 	id: 'grid-excel-button',
 	text: 'Export to Excel'
 });
-
+	var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+					clicksToMoveEditor: 1,
+					autoCancel: false
+	});
 	var CompanyGrid = Ext.create('Ext.grid.Panel',{
 	title: 'Aziende',
 		viewConfig: {
 											style : { overflow: 'auto'}
 										},
 		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
+		plugins: [
+					rowEditing
+				],
 		dockedItems:[{xtype: 'pagingtoolbar',
 		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
 		
@@ -35,8 +41,25 @@ var linkButton = new Ext.LinkButton({
 						    icon: 'media/addcompany.png',
 						    text: 'aggiungi azienda',
 						    handler: function()
-						    {  companyForm(//carico la  form con dati di default
-															/*{
+						    {
+							var today = new Date();
+							var dd = today.getDate();
+							var mm = today.getMonth()+1; //January is 0!
+							var yyyy = today.getFullYear();
+							if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
+							var company = Ext.ModelManager.create({
+								data: today,
+							}, 'Company');
+							var store = Ext.data.StoreManager.lookup('bbCompaniesStore')
+							store.insert(0, company);
+							rowEditing.startEdit(0, 0)
+							CompanyGrid.on('edit', function() {
+								store.remove(company)
+								company.save()
+							})
+							store.load()
+							/*companyForm(//carico la  form con dati di default
+															{
 																_id: 5,
 																Firm : 'Firm',
 																country : 'paese',
@@ -45,7 +68,7 @@ var linkButton = new Ext.LinkButton({
 																telefono : '123456789',
 																website : 'www.firm.it',
 																email: ' arpho@live.co.uk'
-															}*/)
+															})*/
 														}
 			},
 			{
@@ -82,34 +105,74 @@ var linkButton = new Ext.LinkButton({
 								[
 								{
 									header : 'P',
-									dataIndex:'p'
+									dataIndex:'p',
+									editor: {
+				// defaults to textfield if no xtype is supplied
+				allowBlank: true
+			}
 								},
 								{
 									header : 'C',
-									dataIndex : 'c'
+									dataIndex : 'c',
+									editor: {
+				// defaults to textfield if no xtype is supplied
+										allowBlank: true
+									}
 								},
 									
 									{
 											header: 'Firm',
 											dataIndex: 'firm',
-											flex:4
+											flex:4,
+									editor: {
+				// defaults to textfield if no xtype is supplied
+										allowBlank: false
+									}
 									},
 									{
 										header:'Paese',
-										dataIndex:'paese'
+										dataIndex:'paese',
+									editor: {
+				// defaults to textfield if no xtype is supplied
+										allowBlank: true
+									}
 									},
 									{
 										header : 'Note',
 										dataIndex : 'note',
-										flex:5
+										flex:5,
+									editor: {
+				// defaults to textfield if no xtype is supplied
+										allowBlank: true
+									}
 									},
 									{
 										header:'Tipo',
-										dataIndex:'type'
+										dataIndex:'type',
+									editor: {
+				// defaults to textfield if no xtype is supplied
+										allowBlank: true
+									}
 									},
 									{
 										header:'Linee',
-										dataIndex:'linee'
+										dataIndex:'linee',
+									editor: {
+				// defaults to textfield if no xtype is supplied
+										xtype:'combo',
+										store:{fields: ['key','label'], 
+										data: [
+												{key:'aperto',label: 'aperto'},
+												{key:'hot',label: 'hot'}, 
+												{key:'bridge', label:'bridge'},
+												{key:'tradato', label:'tradato'}
+									
+											]
+										},
+										displayField : 'label',
+										valueField : 'key',
+										allowBlank: true
+									}
 									},
 									{
 										header:'Data',
@@ -138,7 +201,15 @@ var linkButton = new Ext.LinkButton({
 						items: [
 						{ text: 'Modifica', handler: function()
 																{
-																	companyForm(rec.data)
+																	//companyForm(rec.data)
+																	var store = Ext.data.StoreManager.lookup('bbCompaniesStore')
+																	//store.insert(0, company);
+																	rowEditing.startEdit(index, 0)
+																	/*CompanyGrid.on('edit', function() {
+																		store.remove(company)
+																		company.save()
+																	})
+																	store.load()*/
 																},
 							icon: 'media/modifica.png'
 						},

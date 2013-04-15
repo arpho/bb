@@ -88,7 +88,7 @@ function showIsins(contact){
 								//r.contact_id = contact.id
 								console.debug(contact)
 								r.save()
-								store.getProxy().url = 'data/isin/'+contact.id+'/'
+								store.getProxy().url = 'data/isin/'+contact.id+'/' // devo indirizzare la richiesta al giusto url
 								Ext.data.StoreManager.lookup('bbIsinStore').load()
 							})
 						}
