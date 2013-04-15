@@ -61,18 +61,6 @@ var linkButton = new Ext.LinkButton({
 								company.save()
 								//store.load()
 							})
-							
-							/*companyForm(//carico la  form con dati di default
-															{
-																_id: 5,
-																Firm : 'Firm',
-																country : 'paese',
-																note : 'nota',
-																type : 'tipo',
-																telefono : '123456789',
-																website : 'www.firm.it',
-																email: ' arpho@live.co.uk'
-															})*/
 						}
 			},
 			{

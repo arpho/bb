@@ -227,14 +227,15 @@ function handleGet(conversation) {
 							var firm
 								firm = cache_firm_id[person.firm_id]//cache_firm_id permette di ridurre le richieste al server mongodb: viene interrogato il database
 																										//solo  una volta per ogni azienda di cui recuper
-							if (firm == null)
+							
+							if (typeof firm  !== "undefined")
 							{
 								
 								dummy = collection_company.find({"_id" : new org.bson.types.ObjectId(person.firm_id)}).toArray()
 								if (null!=dummy[0])
 								{
 									firm = dummy[0].firm
-									
+									return  JSON.to(firm, true)
 								}
 								else
 								{

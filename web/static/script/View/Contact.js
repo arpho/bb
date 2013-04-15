@@ -1,11 +1,19 @@
 Ext.namespace('BB');
 
+	var rowEditingContact = Ext.create('Ext.grid.plugin.RowEditing', {
+					clicksToMoveEditor: 1,
+					autoCancel: false
+	});
 	var ContactsGrid = Ext.create('Ext.grid.Panel', {
 				title: 'Contatti',
+				
 				viewConfig	  : {
 											style : { overflow: 'auto' }
 										},
 	store: Ext.data.StoreManager.lookup('bbContactsStore'),
+	plugins: [
+					rowEditingContact
+				],
 	listeners:{
 					 itemcontextmenu: function(view, rec, node, index, event) {
 							event.stopEvent(); // stops the default event. i.e. Windows Context Menu
@@ -71,181 +79,36 @@ Ext.namespace('BB');
 				xtype: 'button',
 				icon: 'media/addcontact.png',
 				text: 'aggiungi contatto',
-				handler: function()
-				{ contactForm(/*
-				{
-															_id : 1,
-															Firm : 'Firm',
-															nome : 'nome',
-															note : 'nota',
-															telefono : '123456789',
-															ml : true,
-															comp : true,
-															cla : 7,
-															email : 'damicogiuseppe77@gmail.com',
-															firm_id :'513e727e44ae2025845e6efb',
-															back_office : 'back_office',
-															numero_back_office : 'numero back office',
-															mail_back_office : 'mail back office',
-															type : 'type',
-															ssi : 'ssi',
-															linee : 'linee',
-															paese : 'paese'
-				}*/
-				)
-															
-															var formPanel = Ext.create('Ext.form.Panel', {
-	style: 'margin: 50px',
-	height: 370,
-	items: [{
-	xtype: 'container',
-	layout: 'hbox',
-	items: [{
-		xtype: 'textfield',
-		fieldLabel: 'Name', 
-		name: 'nome',
-		labelAlign: 'top',
-		cls: 'field-margin',
-		flex: 3
-	}, {
-		xtype: 'combo',
-		fieldLabel:'Firm',
-		store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
-		displayField : 'firm',
-		valueField : 'id',
-		pageSize : pageSize,
-		mode: 'remote',
-		typeAhead :true,
-		typeAheadDelay: 20,
-		minChars  : 3,
-		name : 'country',
-		labelAlign : 'top',
-		cls : 'field-margin',
-		flex: 15
-	},
-	{
-		xtype : 'textfield',
-		fieldLabel : 'Nota',  
-		name : 'note',
-		labelAlign : 'top',
-		cls : 'field-margin',
-		flex : 4
-	},{
-		xtype:'textfield',
-		fieldLabel:'Cla',
-		name:'cla',
-		labelAlign: 'top',
-		cls: 'field-margin',
-		flex: 2
-	  }]
-	},
-	{
-	xtype: 'container',
-	layout: 'hbox',
-	items:[
-	{
-		xtype:'textfield',
-		fieldLabel:'E-Mail',
-		name:'email',
-		labelAlign: 'top',
-		cls: 'field-margin',
-		flex: 2
-	  },
-								{
-									xtype:'textfield',
-									fieldLabel:'Telefono',
-									name:'telefono',
-									labelAlign: 'top',
-										cls: 'field-margin',
-										flex: 1.5
-								},
-								{
-									xtype:'checkboxfield',
-									fieldLabel:'M.L.',
-									name: 'ml',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								}
-							]
-		},{
-	xtype: 'container',
-	layout: 'hbox',
-	items:[
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Back Office',
-									name : 'back_office',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Mail Back Office',
-									name : 'mail_back_office',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Numero Back Office',
-									name : 'numero_back_office',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								}]
-	  },
-	  {
-				xtype: 'container',
-				layout: 'hbox',
-				items:[
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Type',
-									name : 'type',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Linee',
-									name : 'Linee',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'SSI',
-									name : 'ssi',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								
-									]
-			},{
-					xtype: 'container',
-					layout: 'hbox',
-					items:[
-									{
-										xtype : 'textfield',
-										fieldLabel : 'Paese',
-										name : 'paese',
-										labelAlign: 'top',
-										cls: 'field-margin',
-									},
-									{
-										xtype : 'checkboxfield',
-										fieldLabel : 'Comp',
-										name : 'comp',
-										labelAlign: 'top',
-										cls: 'field-margin',
-									}
-								]
+				handler: function(){
+					rowEditingContact.cancelEdit();
+							var today = new Date();
+							var dd = today.getDate();
+							var mm = today.getMonth()+1; //January is 0!
+							var yyyy = today.getFullYear();
+							console.log([dd,mm,yyyy])
+							if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
+							var contact = Ext.ModelManager.create({
+								data: today,
+							}, 'Contact');
+							var store = Ext.data.StoreManager.lookup('bbContactsStore')
+							console.log('store')
+							console.log(store)
+							console.log('aggiungi')
+							contact.data.firm_id = contact.data.firm // la combobox in rowediting inserisce firm_id nel campo firm
+							
+							store.insert(0, contact);
+							console.log('rowediting')
+							console.log(rowEditingContact)
+							rowEditingContact.startEdit(0, 0)
+							ContactsGrid.on('edit', function() {
+								console.log('contact')
+								contact.data.firm_id = contact.data.firm // la combobox in rowediting inserisce firm_id nel campo firm
+								console.log(contact)
+								store.remove(contact)
+								contact.save()
+								store.load()
+							})
 				}
-		]
-});
-
-
-
-														}
 			},
 			{
 													xtype: 'button',
@@ -289,19 +152,42 @@ Ext.namespace('BB');
 									{
 											header: 'Firm',
 											dataIndex: 'firm',
+										editor: {
+										// defaults to textfield if no xtype is supplied
+										allowBlank: false,
+										xtype:'combo',
+										
+		store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
+		displayField : 'firm',
+		valueField : 'id',
+										allowBlank: true
+									}
 									},
+									
 									{
 										header:'Nome',
 										name: 'nome contatto',
-										dataIndex: 'nome'
+										dataIndex: 'nome',
+									editor: {
+										// defaults to textfield if no xtype is supplied
+										allowBlank: false
+									}
 									},
 									{
 										header: 'Email',
 										dataIndex: 'email',
+									editor: {
+										// defaults to textfield if no xtype is supplied
+										allowBlank: true
+									}
 									},
 									{
 										header:'Telefono',
-										dataIndex:'telefono'
+										dataIndex:'telefono',
+									editor: {
+										// defaults to textfield if no xtype is supplied
+										allowBlank: true
+									}
 									},
 									{
 										header: 'Data Inserimento',
@@ -311,7 +197,11 @@ Ext.namespace('BB');
 									{
 											header: 'Note',
 											dataIndex: 'note',
-											flex:2
+											flex:2,
+									editor: {
+										// defaults to textfield if no xtype is supplied
+										allowBlank: true
+									}
 									},
 									{
 										name:'comp',
@@ -320,7 +210,12 @@ Ext.namespace('BB');
 										renderer:function (value, metaData, record, row, col, store, gridView) {
 											var v = (value==true)?'y':'n'
 											return v
-										}
+										},
+										editor: {
+										// defaults to textfield if no xtype is supplied
+										xtype:'checkboxfield',
+										allowBlank: true
+									}
 									},
 									{
 										header:'M.L.',
@@ -328,7 +223,12 @@ Ext.namespace('BB');
 										renderer:function (value, metaData, record, row, col, store, gridView) {
 											var v = (value==true)?'y':'n'
 											return v
-										}
+										},
+										editor: {
+										// defaults to textfield if no xtype is supplied
+										xtype:'checkboxfield',
+										allowBlank: true
+									}
 									},
 									{
 										header:'Tipo',
@@ -340,15 +240,18 @@ Ext.namespace('BB');
 									},
 									{
 										header:'Isin',
-										dataIndex: 'isin'
+										dataIndex: 'isin',
+										flex:0.5
 									},
 									{
 										header:'Price',
-										dataIndex: 'price'
+										dataIndex: 'price',
+										flex:0.5
 									},
 									{
 										header:'Size',
-										dataIndex: 'size'
+										dataIndex: 'size',
+										flex:0.5
 									},
 									{
 										header:'Data',
