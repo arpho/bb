@@ -84,13 +84,6 @@ function ContactFilterForm()
 										labelAlign: 'top',
 										cls: 'filter-margin'
 									},
-									{
-											xtype: 'textfield',
-											name:'linee',
-											fieldLabel: "Linee",
-											labelAlign: 'top',
-											cls: 'filter-margin'
-									},
 									
 							]
 					
@@ -122,14 +115,6 @@ function ContactFilterForm()
 									cls: 'filter-margin',
 									flex: 1
 								},
-								{
-											xtype: 'textfield',
-											fieldLabel:"SSI",
-											name:'ssi',
-											labelAlign: 'top',
-											cls: 'filter-margin',
-									flex: 1
-								},
 							]
 			},// fine secondo container
 			{
@@ -137,21 +122,6 @@ function ContactFilterForm()
         layout: 'hbox',
         items:
         [
-					{
-						xtype: 'textfield',
-						fieldLabel:"Back Office",
-						name:'back_office',
-						fieldLabel: "Back Office",
-						labelAlign: 'top',
-						cls: 'filter-margin'
-					},
-									{
-										xtype: 'textfield',
-										name:'mail_back_office',
-										fieldLabel: "Mail Back Office",
-										labelAlign: 'top',
-										cls: 'filter-margin'
-									},
 									{
 											xtype:'combo',
 											store:{fields: ['key','label'], 

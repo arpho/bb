@@ -223,19 +223,20 @@ function handleGet(conversation) {
 					for (var c in cursor_contacts){
 						person = cursor_contacts[c]
 						person.id = person._id.toString()
-						if (person.firm_id != null){
+						if ((person.firm_id != null)&& (person.firm_id != "")){
 							var firm
-								firm = cache_firm_id[person.firm_id]//cache_firm_id permette di ridurre le richieste al server mongodb: viene interrogato il database
-																										//solo  una volta per ogni azienda di cui recuper
+								firm = cache_firm_id[person.firm_id]/*cache_firm_id permette di ridurre le richieste al server mongodb: viene interrogato il database
+							//solo  una volta per ogni azienda di cui recupererare il campo firm*/
 							
-							if (typeof firm  !== "undefined")
+							if (typeof firm  === "undefined")// se undefined firm non presente in cache
 							{
-								
+								//return  JSON.to(person, true)
 								dummy = collection_company.find({"_id" : new org.bson.types.ObjectId(person.firm_id)}).toArray()
+								
 								if (null!=dummy[0])
 								{
 									firm = dummy[0].firm
-									return  JSON.to(firm, true)
+									//return  JSON.to(firm, true)
 								}
 								else
 								{
@@ -243,9 +244,7 @@ function handleGet(conversation) {
 									firm = 'azienda rimossa'
 									
 								}
-								{
 								cache_firm_id[person.firm_id] = firm
-							}
 							person.firm = firm
 							//return  JSON.to(person, true)
 						}

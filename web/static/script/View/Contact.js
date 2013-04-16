@@ -80,34 +80,31 @@ Ext.namespace('BB');
 				icon: 'media/addcontact.png',
 				text: 'aggiungi contatto',
 				handler: function(){
-					rowEditingContact.cancelEdit();
-							var today = new Date();
-							var dd = today.getDate();
-							var mm = today.getMonth()+1; //January is 0!
-							var yyyy = today.getFullYear();
-							console.log([dd,mm,yyyy])
-							if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy;
-							var contact = Ext.ModelManager.create({
-								data: today,
-							}, 'Contact');
-							var store = Ext.data.StoreManager.lookup('bbContactsStore')
-							console.log('store')
-							console.log(store)
-							console.log('aggiungi')
-							contact.data.firm_id = contact.data.firm // la combobox in rowediting inserisce firm_id nel campo firm
-							
-							store.insert(0, contact);
-							console.log('rowediting')
-							console.log(rowEditingContact)
-							rowEditingContact.startEdit(0, 0)
-							ContactsGrid.on('edit', function() {
-								console.log('contact')
-								contact.data.firm_id = contact.data.firm // la combobox in rowediting inserisce firm_id nel campo firm
-								console.log(contact)
-								store.remove(contact)
-								contact.save()
-								store.load()
-							})
+					/*rowEditingContact.cancelEdit();
+					var today = new Date()
+					var dd = today.getDate()
+					var mm = today.getMonth()+1 //January is 0!
+					var yyyy = today.getFullYear()
+					if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = mm+'/'+dd+'/'+yyyy
+					var contact = Ext.ModelManager.create({
+						data: today,
+					}, 'Contact');
+					var store = Ext.data.StoreManager.lookup('bbContactsStore')
+					contact.data.firm_id = contact.data.firm // la combobox in rowediting inserisce firm_id nel campo firm
+					
+					store.insert(0, contact)
+					console.log(rowEditingContact)
+					rowEditingContact.startEdit(0, 0)
+					ContactsGrid.on('edit', function() {
+						console.log('contact')
+						contact.data.firm_id = contact.data.firm // la combobox in rowediting inserisce firm_id nel campo firm
+						console.log(contact)
+						store.remove(contact)
+						contact.save()
+						store.load()
+						rowEditingContact.cancelEdit()
+					})*/
+					contactForm()
 				}
 			},
 			{
@@ -269,38 +266,29 @@ function contactForm(contact)
 {
 	var submitForm = function()
 															{
-																var nomeField = formPanel.items.get(0).items.get(0);
-																var firmField = formPanel.items.get(0).items.get(1);
+																var nomeField = formPanel.items.get(0).items.get(1);
+																var firmField = formPanel.items.get(0).items.get(0);
 																console.log('firmField')
 																console.debug(firmField)
-																var noteField = formPanel.items.get(0).items.get(2);
-																var claField = formPanel.items.get(0).items.get(3);
-																var telefonoField = formPanel.items.get(1).items.get(1);
-																var mlField = Field = formPanel.items.get(1).items.get(2);
-																var claField = formPanel.items.get(0).items.get(3);
-																var emailField = formPanel.items.get(1).items.get(0);
-																var telefonoField = formPanel.items.get(1).items.get(1);
-																var back_office = formPanel.items.get(2).items.get(0);
-																var mail_back_office = formPanel.items.get(2).items.get(1);
-																var numero_back_office = formPanel.items.get(2).items.get(2);
-																var typeField = formPanel.items.get(3).items.get(0)// nella quartalineadi form si trovano: type,linee, ssi
-																var lineeField = formPanel.items.get(3).items.get(1)
-																var ssiField = formPanel.items.get(3).items.get(2)
-																var paeseField = formPanel.items.get(4).items.get(0)
-																var compField = formPanel.items.get(4).items.get(1)
+																var noteField = formPanel.items.get(1).items.get(0);
+																var telefonoField = formPanel.items.get(0).items.get(3);
+																var mlField = Field = formPanel.items.get(0).items.get(4);
+																var compField = formPanel.items.get(0).items.get(5)
+																var emailField = formPanel.items.get(0).items.get(2);
+																var typeField = formPanel.items.get(0).items.get(6)
+																var paeseField = formPanel.items.get(0).items.get(7)
 																function getId(c){
 																	var id
-																	if (null != c.id){
+																	if (typeof c !== "undefined"){
 																		id = c.id+'/'//  il trailing slash serve a sistemare lo url della richiesta Post
 																		//console.log(id)
 																	}
 																	return id
 																}
 																var Contact = Ext.ModelManager.create({nome: nomeField.getValue(), note: noteField.getValue(),firm_id:firmField.getValue(),email:emailField.getValue(),
-																																			back_office: back_office.getValue(),numero_back_office:numero_back_office.getValue(),mail_back_office:mail_back_office.getValue(),
-																																			type:typeField.getValue(),linee:lineeField.getValue(),ssi:ssiField.getValue(),
-																																			paese:paeseField.getValue(),telefono:telefonoField.getValue(),Linee: lineeField.getValue(),
-																																			Cla:claField.getValue(),ml:mlField.getValue(), comp:compField.getValue(),id:getId(contact)}, 'Contact');
+																																			type:typeField.getValue(),
+																																			paese:paeseField.getValue(),telefono:telefonoField.getValue(),
+																																			ml:mlField.getValue(), comp:compField.getValue(),id:getId(contact)}, 'Contact');
 																console.log(Contact)
 																Contact.save()
 																Ext.data.StoreManager.lookup('bbContactsStore').load()
@@ -315,7 +303,7 @@ function contactForm(contact)
 														
 	var formPanel = Ext.create('Ext.form.Panel', {
 						style: 'margin: 50px',
-						height: 370,
+						height: 170,
 						buttons: [
 								{
 									text: setButtonText(contact),
@@ -326,27 +314,20 @@ function contactForm(contact)
 	items: [{
 	xtype: 'container',
 	layout: 'hbox',
-	items: [{
-		xtype: 'textfield',
-		fieldLabel: 'Name', 
-		name: 'nome',
-		labelAlign: 'top',
-		cls: 'field-margin',
-		flex: 3
-	}, {
+	items: [ {
 		xtype: 'combo',
 		fieldLabel:'Firm',
 		name : 'firm_id',
 		store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
 		displayField : 'firm',
 		valueField : 'id',
-		initialValue : contact.firm_id,
+		initialValue : (typeof contact ==="undefined")?'':contact.firm_id,
 		pageSize : pageSize,
 		listeners:{
 												afterrender: function(){
 													console.debug(this)
 													this.store.load()
-													var defaultValue = contact.firm_id
+													var defaultValue = (typeof contact==="undefined")?'':contact.firm_id
 													this.setValue(defaultValue)
 													console.debug(defaultValue)
 												}
@@ -357,34 +338,21 @@ function contactForm(contact)
 		minChars  : 3,
 		labelAlign : 'top',
 		cls : 'field-margin',
-		flex: 15
+		flex: 8
 	}, {
-		xtype : 'textfield',
-		fieldLabel : 'Nota',  
-		name : 'note',
-		labelAlign : 'top',
-		cls : 'field-margin',
-		flex : 4
+		xtype: 'textfield',
+		fieldLabel: 'Nome', 
+		name: 'nome',
+		labelAlign: 'top',
+		cls: 'field-margin',
+		flex: 6
 	},{
 						xtype:'textfield',
-						fieldLabel:'Cla',
-						name:'cla',
-						labelAlign: 'top',
-		cls: 'field-margin',
-		flex: 2
-	  }]
-	},
-	{
-	xtype: 'container',
-	layout: 'hbox',
-	items:[
-	{
-						xtype:'textfield',
-						fieldLabel:'E-Mail',
+						fieldLabel:'Email',
 						name:'email',
 						labelAlign: 'top',
 		cls: 'field-margin',
-		flex: 2
+		flex: 4
 	  },
 								{
 									xtype:'textfield',
@@ -392,101 +360,64 @@ function contactForm(contact)
 									name:'telefono',
 									labelAlign: 'top',
 										cls: 'field-margin',
-										flex: 1.5
-								},
-								{
+										flex: 5
+								},{
 									xtype:'checkboxfield',
 									fieldLabel:'M.L.',
 									name: 'ml',
 									labelAlign: 'top',
 									cls: 'field-margin',
-								}
-							]
-		},{
-	xtype: 'container',
-	layout: 'hbox',
-	items:[
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Back Office',
-									name : 'back_office',
-									labelAlign: 'top',
-									cls: 'field-margin',
 								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Mail Back Office',
-									name : 'mail_back_office',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Numero Back Office',
-									name : 'numero_back_office',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								}]
-	  },
-	  {
-				xtype: 'container',
-				layout: 'hbox',
-				items:[
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Type',
-									name : 'type',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'Linee',
-									name : 'linee',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								{
-									xtype : 'textfield',
-									fieldLabel : 'SSI',
-									name : 'ssi',
-									labelAlign: 'top',
-									cls: 'field-margin',
-								},
-								
-									]
-			},{
-					xtype: 'container',
-					layout: 'hbox',
-					items:[
-									{
-										xtype : 'textfield',
-										fieldLabel : 'Paese',
-										name : 'paese',
-										labelAlign: 'top',
-										cls: 'field-margin',
-									},
 									{
 										xtype : 'checkboxfield',
 										fieldLabel : 'Comp',
 										name : 'comp',
 										labelAlign: 'top',
 										cls: 'field-margin',
-									}
-								]
+									},
+									{
+									xtype : 'textfield',
+									fieldLabel : 'Tipo',
+									name : 'type',
+									labelAlign: 'top',
+									cls: 'field-margin',
+									flex : 2
+								},
+								{
+										xtype : 'textfield',
+										fieldLabel : 'Paese',
+										name : 'paese',
+										labelAlign: 'top',
+										cls: 'field-margin',
+										flex : 1
+									}]
+	},
+	
+		{
+						xtype: 'container',
+						layout: 'hbox',
+						items:[{
+			xtype : 'textfield',
+			fieldLabel : 'Nota',  
+			name : 'note',
+			labelAlign : 'top',
+			cls : 'field-margin',
+			flex : 6
+		},
+	]
 				}
 		]
 });
 function setButtonText(c){
 	var text = 'Inserisci contatto'
-	if ( c.id != null){
+	if (typeof c !== "undefined"){
 		text = 'modifica contatto'
 	}
 	return text
 }
 function setTitleGritter(c){
 	var title = ' Nuovo Contatto'
-	if ( null != c.id){
+	if (typeof c !== "undefined"){
 		title = 'Modifica Contatto'
 	}
 	return title
@@ -494,14 +425,14 @@ function setTitleGritter(c){
 
 function setTextGritter(c){
 	var text = 'Contatto inserito correttamente'
-	if ( null != c.id){
+	if (typeof c !== "undefined"){
 		text = 'Contatto modificato correttamente'
 	}
 	return text
 }
 function setTitleContact(c){
 	var title = 'Nuovo Contatto'
-	if (null != c.id)
+	if (typeof c !== "undefined")
 	{
 		title = 'Modifica Contatto '+c.nome
 	}
@@ -510,8 +441,8 @@ function setTitleContact(c){
 contactWindow = Ext.create('Ext.window.Window',
 {
 			title: setTitleContact(contact),
-			height: 470,
-			width:650,
+			height: 280,
+			width:1300,
 			layout: 'border',
 			items: {
 								region: 'center',

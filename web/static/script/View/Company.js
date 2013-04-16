@@ -4,18 +4,19 @@ var linkButton = new Ext.LinkButton({
 	id: 'grid-excel-button',
 	text: 'Export to Excel'
 });
-	var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
-					clicksToMoveEditor: 1,
-					autoCancel: false
+	var rowEditingCompany = Ext.create('Ext.grid.plugin.RowEditing', {
+					clicksToEdit: 2,
 	});
+	console.log(rowEditingCompany)
 	var CompanyGrid = Ext.create('Ext.grid.Panel',{
 	title: 'Aziende',
+	selType: 'rowmodel',
 		viewConfig: {
 											style : { overflow: 'auto'}
 										},
 		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
 		plugins: [
-					rowEditing
+					rowEditingCompany
 				],
 		dockedItems:[{xtype: 'pagingtoolbar',
 		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
@@ -32,7 +33,6 @@ var linkButton = new Ext.LinkButton({
 			console.debug(this)
 			this.url = 'data:application/vnd.ms-excel;base64,' +
 			Base64.encode(CompanyGrid.getExcelXml());
-			console.debug(this.url)
 			window.location = this.url
 		}
 		},
@@ -41,8 +41,12 @@ var linkButton = new Ext.LinkButton({
 						icon: 'media/addcompany.png',
 						text: 'aggiungi azienda',
 						handler: function()
-						{
-							rowEditing.cancelEdit();
+						{companyForm()/*
+							console.log('rowediting before cancel')
+							console.log(rowEditingCompany)
+							rowEditingCompany.cancelEdit();
+							console.log('rowediting after cancel')
+							console.log(rowEditingCompany)
 							var today = new Date();
 							var dd = today.getDate();
 							var mm = today.getMonth()+1; //January is 0!
@@ -52,17 +56,17 @@ var linkButton = new Ext.LinkButton({
 								data: today,
 							}, 'Company');
 							var store = Ext.data.StoreManager.lookup('bbCompaniesStore')
-							console.log('aggiungi')
-							console.log(company)
 							store.insert(0, company);
-							rowEditing.startEdit(0, 0)
+							rowEditingCompany.startEdit(0, 0)
 							CompanyGrid.on('edit', function() {
 								store.remove(company)
 								company.save()
-								//store.load()
+								company.sync()
+								store.load()
 							})
+						}*/
 						}
-			},
+		},
 			{
 					xtype:'button',
 					text: 'Filtra aziende',
@@ -195,7 +199,7 @@ var linkButton = new Ext.LinkButton({
 																{
 																	//companyForm(rec.data)
 																	var store = Ext.data.StoreManager.lookup('bbCompaniesStore')
-																	rowEditing.startEdit(index, 0)
+																	rowEditingCompany.startEdit(index, 0)
 																	rec.data.id = rec.data.id +'/'
 																	CompanyGrid.on('edit', function() {
 																		var company = Ext.ModelManager.create(rec.data, 'Company')
@@ -273,7 +277,7 @@ function companyForm(company)
 																var webField = null// formPanel.items.get(3).items.get(0)
 																function getId(c){
 																	var id
-																	if (null != c.id){
+																	if (typeof c!== "undefined"){
 																		id = c.id+'/'//  il trailing slash serve a sistemare lo url della richiesta Post
 																		//console.log(id)
 																	}
@@ -289,14 +293,14 @@ function companyForm(company)
 																function setTitleGritter(c){
 																	//console.log(c.id)
 																	var title = 'Inserimento'
-																	if (null != c.Id || "" != c.id){
+																	if (typeof c!== "undefined"){
 																		title = "Modifica"
 																	}
 																	return title
 																}
 																function setTextGritter(c){
 																	var text = "azienda inserita correttamente"
-																	if (null != c.Id || "" != c.id){
+																	if (typeof c!== "undefined"){
 																		text = "azienda modificata correttamente"
 																	}
 																	return text
@@ -309,7 +313,7 @@ function companyForm(company)
 															}
 	function setTextButton(c){
 		var text = 'Inserisci Azienda'
-		if (null!= c.id ){
+		if (typeof c!== "undefined" ){
 			text = 'Modifica Azienda'
 		}
 			return text
@@ -442,7 +446,7 @@ function companyForm(company)
 function setTitleCompany(company){
 	var title = 'Nuova Azienda'
 	//console.debug(company)
-	if (null != company.id){
+	if (typeof company!== "undefined"){
 		title = ' Modifica azienda '+company.firm
 	}
 	return title

@@ -6,6 +6,8 @@ Ext.create('Ext.data.Store',
 				storeId: 'bbCompaniesStore',
 				model:'Company',
 				pageSize: pageSize,
+				buffered: true,
+				purgePageCount: 0,
 				proxy:
 				{
 					idProperty : '_id',
