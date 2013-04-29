@@ -1,4 +1,5 @@
 document.executeOnce('/mongo-db/')
+document.executeOnce('/session/')
 
 function handleInit(conversation) {
 	conversation.addMediaTypeByName('application/json')
@@ -21,6 +22,7 @@ function slice(arr,begin,end){
 function handleGet(conversation) {
 	var Id = conversation.locals.get('id')
 	var limit = conversation.query.get('limit')
+	var session_id = conversation.query.get('session_id')
 	var start = conversation.query.get('start')
 	var connection = application.globals.get('mongoDbConnection')
 	if (null === connection) {
@@ -37,6 +39,16 @@ if (null !== connection) {
 		var database = connection.getDB(databaseName)
 		var connection = new MongoDB.connect('127.0.0.1')
 		var collection = new MongoDB.Collection('contacts', {db: database, connection: connection}) // i dati isin sono contenuti nei documenti dei contatti
+		var session = new MongoDB.Collection('session', {db: database, connection: connection})
+		var user = check_session(session,new org.bson.types.ObjectId(session_id))
+		//return  JSON.to(user.toArray(), true)
+		if(user.toArray().length==0)
+		{
+			var r ={}
+			r.success = false
+			r.message = 'Access denied: sessione non valida!!'
+			return  JSON.to(r, true)
+		}
 		var contact = collection.find({"_id" : new org.bson.types.ObjectId(Id)}).toArray()
 		var isin = slice(contact[0]["isin"],start,limit+start) // anchese trova un solo elemento lo mette in array
 		var isins = []

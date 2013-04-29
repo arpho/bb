@@ -1,5 +1,14 @@
 Ext.namespace('BB');
 
+function makeComboStore(session_id)
+{
+	var store = Ext.data.StoreManager.lookup('bbCompanies4ComboStore')
+	console.log('session_id combo')
+	console.log(session_id)
+	store.getProxy().extraParams.session_id = session_id
+	return store
+}
+
 	var rowEditingContact = Ext.create('Ext.grid.plugin.RowEditing', {
 					clicksToMoveEditor: 1,
 					autoCancel: false
@@ -17,8 +26,11 @@ Ext.namespace('BB');
 	listeners:{
 					 itemcontextmenu: function(view, rec, node, index, event) {
 							event.stopEvent(); // stops the default event. i.e. Windows Context Menu
+							console.log('isin')
+							console.log(BB.user.user.session_id)
 							var gridContextMenu = Ext.create('Ext.menu.Menu', {
-									items: [{ text: 'Isin', handler: function(){showIsins(rec.data)},icon: 'media/coins.png'},
+								
+									items: [{ text: 'Isin', handler: function(){showIsins(rec.data,BB.user.user.session_id)},icon: 'media/coins.png'},
 									{ text: 'Modifica', handler: function(){contactForm(rec.data)},icon: 'media/modifica.png'},
 									{
 										text:'cancella',
@@ -104,7 +116,10 @@ Ext.namespace('BB');
 						store.load()
 						rowEditingContact.cancelEdit()
 					})*/
-					contactForm()
+					console.log('user nel bottone')
+					console.log(BB.user.user)
+					var dummy ={}
+					contactForm(dummy.a,BB.user.user.session_id)// passo un parametro undefined a contactForm
 				}
 			},
 			{
@@ -153,10 +168,9 @@ Ext.namespace('BB');
 										// defaults to textfield if no xtype is supplied
 										allowBlank: false,
 										xtype:'combo',
-										
-		store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
-		displayField : 'firm',
-		valueField : 'id',
+										store:makeComboStore(BB.user.user.session_id),
+										displayField : 'firm',
+										valueField : 'id',
 										allowBlank: true
 									}
 									},
@@ -262,8 +276,12 @@ Ext.namespace('BB');
 	//renderTo: Ext.getBody()
 			});//ends contactsGrid
 			
-function contactForm(contact)
+function contactForm(contact,session_id)
 {
+	console.log('session in contactForm')
+	console.log(session_id)
+	var store = Ext.data.StoreManager.lookup('bbCompanies4ComboStore')
+	store.getProxy().extraParams.session_id = session_id
 	var submitForm = function()
 															{
 																var nomeField = formPanel.items.get(0).items.get(1);
@@ -318,7 +336,7 @@ function contactForm(contact)
 		xtype: 'combo',
 		fieldLabel:'Firm',
 		name : 'firm_id',
-		store:Ext.data.StoreManager.lookup('bbCompanies4ComboStore'),
+		store:store,
 		displayField : 'firm',
 		valueField : 'id',
 		initialValue : (typeof contact ==="undefined")?'':contact.firm_id,

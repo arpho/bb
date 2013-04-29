@@ -75,8 +75,8 @@ function showLogin(store){
 				win.close()
 				this.result.user.logged = true // per qualche motivo il server non setta user.logged, lo faccio io
 				BB.user = new User(this.result.user)
-				console.log('logged user')
-				console.log(BB.user)
+				console.log('session_id')
+				console.log(BB.user.user.session_id)
 				loadData(BB.user)
 			//	store.add({user:this.result.user.user,admin:this.result.user.admin,enabled:this.result.user.enabled,logged:this.result.user.logged,superuser:this.result.user.superuser,password:this.result.user.password})
 				//store.sync()

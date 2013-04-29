@@ -1,9 +1,12 @@
-function showIsins(contact){
+function showIsins(contact,session_id){
 	var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
 					clicksToMoveEditor: 1,
 					autoCancel: false
 	});
 	var store = Ext.data.StoreManager.lookup('bbIsinStore')
+	console.log('isin ricevuto')
+	console.log(session_id)
+	store.getProxy().extraParams.session_id = session_id
 	var IsinGrid = Ext.create('Ext.grid.Panel', {
 				title: contact.nome +' '+contact.firm+': Isin',
 				plugins: [
