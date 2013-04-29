@@ -1,11 +1,11 @@
 Ext.namespace('BB');
 Ext.define('User',
 	{
-    extend: 'Ext.data.Model',
-    fields: [
+	extend: 'Ext.data.Model',
+	fields: [
 			{
-					name :  'id',
-					type : 'string'
+				name : 'id',
+				type : 'string'
 			},
 			{
 				name : 'user',
@@ -18,12 +18,24 @@ Ext.define('User',
 			{
 				name : 'logged',
 				type : 'boolean'
-			},{
+			},
+			{
 				name : 'superuser',
 				type : 'boolean'
-			},{
+			},
+			{
 				name : 'enabled',
 				type : 'boolean'
+			},
+			{
+				name : 'logged_in',
+				type : 'date'
+			},
+			{
+				name : 'group'
+			},
+			{
+				name : 'session_id'
 			}
     ],
     proxy : {

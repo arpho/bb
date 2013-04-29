@@ -22,7 +22,7 @@ BB.user = {
 	user : 'admin',
 	password : 'bb',
 	enabled: true,
-	logged : true,
+	logged : false,
 	superuser : true
 }
 

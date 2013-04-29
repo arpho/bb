@@ -20,7 +20,8 @@ function isSystem(collectionName) {
 	return (collectionName.substr(0, 7) == 'system.') || (collectionName.substr(0, 4) == 'tmp.')
 }
 function handlePost(conversation)
-{
+{/*passo i dati in post per nasconderli
+	*/
 	var text =JSON.from(conversation.form,true)
 	var pwd =  text.loginPassword
 	var username =text.loginUsername
@@ -44,10 +45,28 @@ function handlePost(conversation)
 					var collection = new MongoDB.Collection('users', {db: database, connection: connection})
 					var text =conversation.entity.text
 					var user = collection.findOne({$and:[{"user":username},{password:pwd}]})
+					var session = new MongoDB.Collection('session', {db: database, connection: connection})
 					var results={}
-					results.user= user
-					results.success=(user!=null)?true:false
+					if (null!= user){
+						dateObj = new Date()
+						user.logged_in = dateObj
+						var session_doc = {}
+						session_doc.user = user
+						session.insert(session_doc)
+						//cerco l'ultima sessione creata dall'utente
+						var new_session= session.find({'user.id':user.id}).sort({_id:-1}).limit(1).toArray()[0]
+						var session_id = new_session._id.toString()
+						user.session_id = session_id
+						results.user= user
+						results.success=true
+						return JSON.to(results,true)
+					}
+					else
+					{
+						results.success=false
+						return JSON.to(results,true)
+					}
 
 	//return "{firm: 'Ed Spencer', note: 'ed@sencha.com','paese':'it'}"
-	return JSON.to(results,true)
+	//return JSON.to(results,true)
 }
