@@ -1,5 +1,7 @@
 function loadData(user){
+	/*imposta la visibilità degli elementi della gui*/
 	console.log('loadData')
+	console.debug(user)
 	Ext.get('utenti-button').setVisible(user.isAdmin())
 	
 	if (user.isLogged()){
@@ -7,10 +9,13 @@ function loadData(user){
 		
 		if (user.isEnabled()){
 			console.log('carico gli store')
-			
-			Ext.data.StoreManager.lookup('bbContactsStore').load();
+			var contact_store = Ext.data.StoreManager.lookup('bbContactsStore')
+			contact_store.getProxy().extraParams.session_id = user.user.session_id
+			contact_store.load();
 			console.debug(Ext.data.StoreManager.lookup('bbContactsStore'))
-			Ext.data.StoreManager.lookup('bbCompaniesStore').load();
+			var company_store= Ext.data.StoreManager.lookup('bbCompaniesStore')
+			company_store.getProxy().extraParams.session_id = user.user.session_id
+			company_store.load();
 			Ext.get('utenti-button').setVisible(user.isAdmin())
 		}
 	}
@@ -20,35 +25,35 @@ function showLogin(store){
 	var win = null
 	var login = new Ext.FormPanel({
 		labelWidth:80,
-        url:'data/login/', 
-        frame:true, 
-        title:'Please Login', 
-        defaultType:'textfield',
-        monitorValid:true,
+	url:'data/login/', 
+	frame:true, 
+	title:'Please Login', 
+	defaultType:'textfield',
+	monitorValid:true,
 				items:[{ 
-                fieldLabel:'Username', 
-                name:'loginUsername', 
-                allowBlank:false 
-            },{ 
-                fieldLabel:'Password', 
-                name:'loginPassword', 
-                inputType:'password', 
-                allowBlank:false 
-            }],
+		fieldLabel:'Username', 
+		name:'loginUsername', 
+		allowBlank:false 
+	    },{ 
+		fieldLabel:'Password', 
+		name:'loginPassword', 
+		inputType:'password', 
+		allowBlank:false 
+	    }],
 				buttons:[{ 
-                text:'Login',
-                formBind: true,	 
-                // Function that fires when user clicks the button 
-                handler:function(){ 
+		text:'Login',
+		formBind: true,	 
+		// Function that fires when user clicks the button 
+		handler:function(){ 
 									var pwd=login.getForm().findField('loginPassword').getValue()
 									var user=login.getForm().findField('loginUsername').getValue()
 									//console.debug()
 									login.getForm().setValues({'loginPassword':hex_sha1(pwd)})
-                    login.getForm().submit({ 
-                        method:'POST', 
-                        waitTitle:'Connecting', 
-                        waitMsg:'Sending data...',
-                        extraParams:{'loginPassword':hex_sha1(pwd),'loginUsername':user},
+		    login.getForm().submit({ 
+			method:'POST', 
+			waitTitle:'Connecting', 
+			waitMsg:'Sending data...',
+			extraParams:{'loginPassword':hex_sha1(pwd),'loginUsername':user},
  
 			// Functions that fire (success or failure) when the server responds. 
 			// The one that executes is determined by the 
@@ -61,38 +66,40 @@ function showLogin(store){
 			// and when they click "OK", they are redirected to whatever page
 			// you define as redirect. 
  
-                        success:function(){ 
-                        	Ext.gritter.add(
+			success:function(){ 
+				Ext.gritter.add(
 														{
 															title: 'Benvenuto', 
 															text: this.result.user.user
 														}); ;
-                        	win.close()
-                        	this.result.user.logged = true // per qualche motivo il server non setta user.logged, lo faccio io
-                        	BB.user = new User(this.result.user)
-                        	loadData(BB.user)
-                        //	store.add({user:this.result.user.user,admin:this.result.user.admin,enabled:this.result.user.enabled,logged:this.result.user.logged,superuser:this.result.user.superuser,password:this.result.user.password})
-                        	//store.sync()
-                        	//console.log('store')
-                        	//console.debug(store.last())
-                        },
+				win.close()
+				this.result.user.logged = true // per qualche motivo il server non setta user.logged, lo faccio io
+				BB.user = new User(this.result.user)
+				console.log('logged user')
+				console.log(BB.user)
+				loadData(BB.user)
+			//	store.add({user:this.result.user.user,admin:this.result.user.admin,enabled:this.result.user.enabled,logged:this.result.user.logged,superuser:this.result.user.superuser,password:this.result.user.password})
+				//store.sync()
+				//console.log('store')
+				//console.debug(store.last())
+			},
 
 			// Failure function, see comment above re: success and failure. 
 			// You can see here, if login fails, it throws a messagebox
 			// at the user telling him / her as much.  
  
-                        failure:function(form, action){ 
-                            if(action.failureType == 'server'){ 
-                                obj = Ext.util.JSON.decode(action.response.responseText); 
-                                Ext.Msg.alert('Login Failed!', obj.errors.reason); 
-                            }else{ 
-                                Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
-                            } 
-                            login.getForm().reset(); 
-                        } 
-                    }); 
-                } 
-            }] 
+			failure:function(form, action){ 
+			    if(action.failureType == 'server'){ 
+				obj = Ext.util.JSON.decode(action.response.responseText); 
+				Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+			    }else{ 
+				Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+			    } 
+			    login.getForm().reset(); 
+			} 
+		    }); 
+		} 
+	    }] 
 	})
 	win = new Ext.Window({
 					layout:'fit',

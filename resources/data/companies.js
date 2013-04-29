@@ -10,6 +10,7 @@
 //
 
 document.executeOnce('/mongo-db/')
+document.executeOnce('/session/')
 
 function handleInit(conversation) {
 	conversation.addMediaTypeByName('application/json')
@@ -43,6 +44,7 @@ function FilterMaker(list){
 }
 
 function handleGet(conversation) {
+	var session_id = conversation.query.get('session_id')
 	var p = conversation.query.get('p')
 	var c = conversation.query.get('c')
 	var node = conversation.query.get('node')
@@ -85,6 +87,16 @@ function handleGet(conversation) {
 					var collectionNames = database.collectionNames.toArray()
 					var connection = new MongoDB.connect('127.0.0.1')
 					var collection = new MongoDB.Collection('companies', {db: database, connection: connection})
+					var session = new MongoDB.Collection('session', {db: database, connection: connection})
+					var user = check_session(session,new org.bson.types.ObjectId(session_id))
+					//return  JSON.to(user.toArray(), true)
+					if(user.toArray().length==0)
+					{
+						var r ={}
+						r.success = false
+						r.message = 'Access denied: sessione non valida!!'
+						return  JSON.to(r, true)
+					}
 					var query = {}
 					//return JSON.to('connected',true)
 					var lista_parametri = []
