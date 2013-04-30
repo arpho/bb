@@ -203,7 +203,7 @@ var linkButton = new Ext.LinkButton({
 																	rec.data.id = rec.data.id +'/'
 																	CompanyGrid.on('edit', function() {
 																		var company = Ext.ModelManager.create(rec.data, 'Company')
-																		console.log(company)
+																		company.data.session_id = BB.user.user.session_id
 																		store.remove(company)
 																		company.save()
 																		store.load()
@@ -287,6 +287,7 @@ function companyForm(company)
 																'paese':countryField.getValue(),type:typeField.getValue(),'c':cField.getValue()
 																,'p':pField.getValue(),'linee':lineeField.getValue(),
 																id:getId(company)}, 'Company');
+																Company.data.session_id = BB.user.user.session_id
 																Company.save()
 																Ext.data.StoreManager.lookup('bbCompaniesStore').load
 																companyWindow.close()

@@ -36,7 +36,6 @@ function handlePost(conversation) {
 	var Isin = {}
 	//return  JSON.to(data, true)
 	var session_id = data.session_id
-	
 	var user = check_session(session,new org.bson.types.ObjectId(session_id))
 	//return  JSON.to(user.toArray(), true)
 	if(user.toArray().length==0)

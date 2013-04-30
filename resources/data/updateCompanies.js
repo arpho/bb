@@ -10,6 +10,7 @@
 //
 
 document.executeOnce('/mongo-db/')
+document.executeOnce('/session/')
 var cache_firm_id = {}
 function handleInit(conversation) {
 	conversation.addMediaTypeByName('application/json')
@@ -44,9 +45,20 @@ function handlePut(conversation)
 		var collectionNames = database.collectionNames.toArray()
 		var connection = new MongoDB.connect('127.0.0.1')
 		var collection = new MongoDB.Collection('companies', {db: database, connection: connection})
+		var session = new MongoDB.Collection('session', {db: database, connection: connection})
 		var text = conversation.entity.text
 					//return JSON.to(text,true)
 		var data = JSON.from(text, true)
+		var session_id = data.session_id
+		var user = check_session(session,new org.bson.types.ObjectId(session_id))
+		//return  JSON.to(user.toArray(), true)
+		if(user.toArray().length==0)
+		{
+			var r ={}
+			r.success = false
+			r.message = 'Access denied: sessione non valida!!'
+			return  JSON.to(r, true)
+		}
 					//return JSON.to(data,true)
 		var company = {}
 		company.firm = data.firm

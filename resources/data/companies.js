@@ -294,6 +294,17 @@ function handlePost(conversation)
 					company.c = data.c
 					company.p = data.p
 					company.linee = data.linee
+					session_id =data.session_id
+					var session = new MongoDB.Collection('session', {db: database, connection: connection})
+					var user = check_session(session,new org.bson.types.ObjectId(session_id))
+					//return  JSON.to(user.toArray(), true)
+					if(user.toArray().length==0)
+					{
+						var r ={}
+						r.success = false
+						r.message = 'Access denied: sessione non valida!!'
+						return  JSON.to(r, true)
+					}
 					dateObj = new Date()
 					var today
 					var dd = dateObj.getDate();
