@@ -46,6 +46,14 @@ function showIsins(contact,session_id){
 				// defaults to textfield if no xtype is supplied
 				allowBlank: false
 			}
+			},
+			{
+				header : 'Nota',
+				dataIndex : 'nota',
+				editor: {
+				// defaults to textfield if no xtype is supplied
+				allowBlank: false
+			}
 			}
 		],
 		dockedItems:[{xtype: 'pagingtoolbar',
@@ -89,7 +97,9 @@ function showIsins(contact,session_id){
 								store.remove(r)
 								//store.getProxy().url = 'data/isin/'+contact.id+'/'+'data/'
 								//r.contact_id = contact.id
-								console.debug(contact)
+								console.log('session_id isin')
+								r.data.session_id = BB.user.user.session_id
+								console.debug(r.data.session_id)
 								r.save()
 								store.getProxy().url = 'data/isin/'+contact.id+'/' // devo indirizzare la richiesta al giusto url
 								Ext.data.StoreManager.lookup('bbIsinStore').load()
@@ -104,7 +114,7 @@ IsinWindow = Ext.create('Ext.window.Window',
 {
 			title: "isin relativi a "+contact.nome,
 			height: 370,
-			width:415,
+			width:565,
 			layout: 'border',
 			items: {
 								region: 'center',

@@ -50,7 +50,8 @@ if (null !== connection) {
 			return  JSON.to(r, true)
 		}
 		var contact = collection.find({"_id" : new org.bson.types.ObjectId(Id)}).toArray()
-		var isin = slice(contact[0]["isin"],start,limit+start) // anchese trova un solo elemento lo mette in array
+		var isin = contact[0]["isin"] // slice1 non fa nulla
+		return  JSON.to(isin, true)
 		var isins = []
 		var dummy = null
 		var n = 0
@@ -69,6 +70,7 @@ if (null !== connection) {
 				d.price = dummy.price
 				d.data = dummy.data
 				d.size = dummy.size
+				d.nota = dummy.nota
 				d.id = n  // creo un id  fittizio
 				isins.push(d)
 				n += 1

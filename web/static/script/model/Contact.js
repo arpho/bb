@@ -71,6 +71,9 @@ Ext.define('Contact', {
 							{
 								name : 'altri_colleghi'
 							},
+							{
+								name : 'session_id'
+							},
 							],
 							proxy :
 							{

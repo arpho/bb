@@ -21,7 +21,13 @@ Ext.define('Isin',
 				type: 'date'
 			},
 			{
+				name: 'nota'
+			},
+			{
 				name : 'contact_id'
+			},
+			{
+				name : 'session_id'
 			}
 		],
 	proxy : {

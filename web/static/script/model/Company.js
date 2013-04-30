@@ -40,6 +40,9 @@ Ext.define('Company',
 			},
 			{
 				name : 'website'
+			},
+			{
+				name : 'session_id'
 			}
 			
 			

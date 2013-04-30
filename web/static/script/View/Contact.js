@@ -307,7 +307,9 @@ function contactForm(contact,session_id)
 																																			type:typeField.getValue(),
 																																			paese:paeseField.getValue(),telefono:telefonoField.getValue(),
 																																			ml:mlField.getValue(), comp:compField.getValue(),id:getId(contact)}, 'Contact');
-																console.log(Contact)
+																console.log('session_id in save contact')
+																console.log(BB.user.user.session_id)
+																Contact.data.session_id = BB.user.user.session_id
 																Contact.save()
 																Ext.data.StoreManager.lookup('bbContactsStore').load()
 																contactWindow.close()

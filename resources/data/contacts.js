@@ -77,9 +77,20 @@ function handlePost(conversation)
 					var collectionNames = database.collectionNames.toArray()
 					var connection = new MongoDB.connect('127.0.0.1')
 					var collection = new MongoDB.Collection('contacts', {db: database, connection: connection})
+					var session = new MongoDB.Collection('session', {db: database, connection: connection})
 					var text =conversation.entity.text
 					var data = JSON.from(text, true)
 					var contact = {}
+					var session_id = data.session_id
+					var user = check_session(session,new org.bson.types.ObjectId(session_id))
+					//return  JSON.to(user.toArray(), true)
+					if(user.toArray().length==0)
+					{
+						var r ={}
+						r.success = false
+						r.message = 'Access denied: sessione non valida!!'
+						return  JSON.to(r, true)
+					}
 					contact.nome= data.nome
 					contact.firm = data.firm
 					contact.note = data.note
