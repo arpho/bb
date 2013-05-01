@@ -12,6 +12,7 @@ var store = Ext.create('Ext.data.Store',
 					type: 'rest',
 					url: 'data/groups/',
 					autoload: true,
+					loading: true,
 					noCache: false,
 					sortParam: 'group',
 					actionMethods:

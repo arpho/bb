@@ -45,6 +45,7 @@ function FilterMaker(list){
 
 function handleGet(conversation) {
 	var session_id = conversation.query.get('session_id')
+	var queryString = conversation.query.get('query')
 	
 	var nodes = []
 		var connection = application.globals.get('mongoDbConnection')

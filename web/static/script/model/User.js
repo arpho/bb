@@ -32,7 +32,7 @@ Ext.define('User',
 				type : 'date'
 			},
 			{
-				name : 'group'
+				name : 'group_id'
 			},
 			{
 				name : 'session_id'

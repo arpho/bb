@@ -43,6 +43,9 @@ Ext.define('Company',
 			},
 			{
 				name : 'session_id'
+			},
+			{
+				name : 'group_id'
 			}
 			
 			

@@ -60,6 +60,7 @@ function handleGet(conversation) {
 	var tipo = conversation.query.get('tipo')
 	var paese = conversation.query.get('paese')
 	var linee = conversation.query.get('linee')
+	var group_id = conversation.query.get('group_id')
 	//return JSON.to(tipo,true)
 	//return JSON.to(firm+'subito',true)
 	var nodes = []
@@ -115,6 +116,14 @@ function handleGet(conversation) {
 						filter.$options = 'i'
 						//return JSON.to(filter,true)
 						lista_parametri.push({'firm':filter})
+						//return JSON.to(lista_parametri,true)
+					}
+					if (null!==group_id){
+						var filter = {}
+						//
+						filter = group_id
+						//return JSON.to(filter,true)
+						lista_parametri.push({'group_id':filter})
 						//return JSON.to(lista_parametri,true)
 					}
 					if (null!==note){
@@ -293,6 +302,7 @@ function handlePost(conversation)
 					company.website = data.website
 					company.c = data.c
 					company.p = data.p
+					company.group_id = data.group_id
 					company.linee = data.linee
 					session_id =data.session_id
 					var session = new MongoDB.Collection('session', {db: database, connection: connection})

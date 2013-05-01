@@ -155,7 +155,31 @@ function formFactory(user){
 												labelAlign: 'top',
 												cls: 'field-margin',
 												flex: 1
-										}
+										},
+										
+													]
+												},
+												{
+													xtype: 'container',
+													layout: 'hbox',
+													items:[
+														{
+															xtype: 'combo',
+															fieldLabel:'Gruppo',
+															name : 'group_id',
+															store:make_combo_store_group(BB.user.user.session_id),
+															displayField : 'group',
+															valueField : 'id',
+															initialValue : (typeof contact ==="undefined")?'':contact.firm_id,
+															pageSize : pageSize,
+														   // mode: 'remote',
+															//typeAhead :true,
+															//typeAheadDelay: 20,
+															//minChars  : 3,
+															labelAlign : 'top',
+															cls : 'field-margin',
+															flex: 8
+														},
 													]
 												}
 											]
@@ -260,7 +284,8 @@ function showUsers(){
 											items :[
 												{
 													xtype : 'button',
-													text : 'inserisci utente',
+													text : 'aggiungi utente',
+													icon: 'media/user_add.png',
 													handler : function(){
 														insertNewUser()
 														

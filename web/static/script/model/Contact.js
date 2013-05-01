@@ -74,6 +74,9 @@ Ext.define('Contact', {
 							{
 								name : 'session_id'
 							},
+							{
+								name : 'group_id'
+							}
 							],
 							proxy :
 							{

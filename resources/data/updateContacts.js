@@ -75,6 +75,7 @@ function handlePut(conversation)
 					contact.mail_back_office = data.mail_back_office
 					contact.numero_back_office = data.numero_back_office
 					contact.comp = data.comp
+					contact.group_id = data.group_id
 					dateObj = new Date()
 					var today
 					var dd = dateObj.getDate();

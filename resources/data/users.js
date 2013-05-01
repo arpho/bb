@@ -144,6 +144,7 @@ function handlePost(conversation)
 					user.user = data.user
 					user.superuser = data.superuser
 					user.enabled = data.enabled
+					user.group_id = data.group_id
 					collection.insert(user)
 	return JSON.to(user,true)
 }

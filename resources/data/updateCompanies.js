@@ -70,6 +70,7 @@ function handlePut(conversation)
 		company.website = data.website
 		company.c = data.c
 		company.p = data.p
+		company.group_id = data.group_id
 		company.linee = data.linee
 		dateObj = new Date()
 		var today

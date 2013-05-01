@@ -3,9 +3,15 @@ Ext.namespace('BB');
 function makeComboStore(session_id)
 {
 	var store = Ext.data.StoreManager.lookup('bbCompanies4ComboStore')
-	console.log('session_id combo')
-	console.log(session_id)
 	store.getProxy().extraParams.session_id = session_id
+	return store
+}
+
+function make_combo_store_group(session_id)
+{
+	var store = makes_group_store(BB.user.user.session_id)
+	store.getProxy().extraParams.session_id = session_id
+	//store.load()
 	return store
 }
 
@@ -304,6 +310,7 @@ function contactForm(contact,session_id)
 																var emailField = formPanel.items.get(0).items.get(2);
 																var typeField = formPanel.items.get(0).items.get(6)
 																var paeseField = formPanel.items.get(0).items.get(7)
+																//var groupField = formPanel.items.get(0).items.get(8)
 																function getId(c){
 																	var id
 																	if (typeof c !== "undefined"){
@@ -314,9 +321,12 @@ function contactForm(contact,session_id)
 																}
 																var Contact = Ext.ModelManager.create({nome: nomeField.getValue(), note: noteField.getValue(),firm_id:firmField.getValue(),email:emailField.getValue(),
 																																			type:typeField.getValue(),
+																																			group_id:BB.user.user.group_id,
 																																			paese:paeseField.getValue(),telefono:telefonoField.getValue(),
 																																			ml:mlField.getValue(), comp:compField.getValue(),id:getId(contact)}, 'Contact');
 																Contact.data.session_id = BB.user.user.session_id
+																console.log('contatto con gruppo')
+																console.log(Contact)
 																Contact.save()
 																Ext.data.StoreManager.lookup('bbContactsStore').load()
 																contactWindow.close()
@@ -417,7 +427,7 @@ function contactForm(contact,session_id)
 										labelAlign: 'top',
 										cls: 'field-margin',
 										flex : 1
-									}]
+									},]
 	},
 	
 		{

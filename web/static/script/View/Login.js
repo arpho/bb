@@ -12,10 +12,18 @@ function loadData(user){
 			console.log('carico gli store')
 			var contact_store = Ext.data.StoreManager.lookup('bbContactsStore')
 			contact_store.getProxy().extraParams.session_id = user.user.session_id
+			if (!BB.user.user.superuser){
+				contact_store.getProxy().extraParams.group_id = user.user.group_id
+			}
+			console.log('logged user')
+			console.log(user)
 			contact_store.load();
 			console.debug(Ext.data.StoreManager.lookup('bbContactsStore'))
-			var company_store= Ext.data.StoreManager.lookup('bbCompaniesStore')
+			var company_store = Ext.data.StoreManager.lookup('bbCompaniesStore')
 			company_store.getProxy().extraParams.session_id = user.user.session_id
+			if (!BB.user.user.superuser){
+				company_store.getProxy().extraParams.group_id = user.user.group_id
+			}
 			company_store.load();
 			Ext.get('utenti-button').setVisible(user.isAdmin())
 		}

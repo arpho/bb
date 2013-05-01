@@ -285,7 +285,7 @@ function companyForm(company)
 																}
 																var Company = Ext.ModelManager.create({firm: firmField.getValue(), note: noteField.getValue(),
 																'paese':countryField.getValue(),type:typeField.getValue(),'c':cField.getValue()
-																,'p':pField.getValue(),'linee':lineeField.getValue(),
+																,'p':pField.getValue(),'linee':lineeField.getValue(),group_id:BB.user.user.group_id,
 																id:getId(company)}, 'Company');
 																Company.data.session_id = BB.user.user.session_id
 																Company.save()

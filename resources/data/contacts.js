@@ -108,8 +108,8 @@ function handlePost(conversation)
 					contact.comp = data.comp
 					contact.ml = data.ml
 					contact.firm_id = data.firm_id
+					contact.group_id = data.group_id
 					contact.paese = data.paese
-					
 					dateObj = new Date()
 					var today
 					var dd = dateObj.getDate();
@@ -149,6 +149,7 @@ function handleGet(conversation) {
 	var mail_back_office = conversation.query.get('mail_back_office')
 	var ml = conversation.query.get('ml')
 	var comp = conversation.query.get('comp')
+	var group_id = conversation.query.get('group_id')
 	filterMaker.addParameter('mail_back_office',mail_back_office)
 	filterMaker.addParameter('nome',nome)
 	filterMaker.addParameter('ssi',ssi)
@@ -223,6 +224,7 @@ function handleGet(conversation) {
 					}
 					filterMaker.addParameter('email',email)
 					filterMaker.addParameter('telefono',telefono)
+					filterMaker.addParameter('group_id',group_id)
 					// adesso devo combinare i parametri in and oppure or
 					if (lista_parametri.length!=0){
 						if (!somma){
