@@ -3,6 +3,7 @@ function loadData(user){
 	console.log('loadData')
 	console.debug(user)
 	Ext.get('utenti-button').setVisible(user.isAdmin())
+	Ext.get('group_button').setVisible(user.isAdmin())
 	
 	if (user.isLogged()){
 		

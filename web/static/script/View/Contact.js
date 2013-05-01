@@ -153,6 +153,15 @@ function makeComboStore(session_id)
 													handler : function(){
 																			showUsers()
 																		}
+												},
+												{
+													xtype : 'button',
+													text : 'gestisci gruppi',
+													id:'group_button',
+													icon: 'media/group.png',
+													handler : function(){
+														show_group_grid(BB.user.user.session_id)
+													}
 												}
 		],
 	displayMsg: 'Visualizzo i contatti {0} - {1} su un totale di {2}',
