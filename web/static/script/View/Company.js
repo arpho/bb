@@ -185,7 +185,7 @@ var linkButton = new Ext.LinkButton({
 				itemclick: function(view, record, item, index, e, options){
 					//console.debug(record)
 					var filteredStore = Ext.data.StoreManager.lookup('bbContactsStore')
-					filteredStore.getProxy().extraParams = {firm_id: record.raw._id}
+					filteredStore.getProxy().extraParams = {firm_id: record.raw._id,session_id:BB.user.user.session_id}
 					filteredStore.load()
 				},
 				itemcontextmenu: function(view, rec, node, index, event) {

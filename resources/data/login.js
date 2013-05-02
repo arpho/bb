@@ -49,7 +49,9 @@ function handlePost(conversation)
 					var results={}
 					if (null!= user){
 						dateObj = new Date()
-						user.logged_in = dateObj
+						user.logged_on_y = dateObj.getFullYear()
+						user.logged_on_m = dateObj.getMonth()
+						user.logged_on_d = dateObj.getDate()+1
 						var session_doc = {}
 						session_doc.user = user
 						session.insert(session_doc)
