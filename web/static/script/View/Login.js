@@ -17,6 +17,8 @@ function loadData(user){
 			}
 			console.log('logged user')
 			console.log(user)
+			console.log('gruppo')
+			console.log(BB.user.user.group_id)
 			contact_store.load();
 			console.debug(Ext.data.StoreManager.lookup('bbContactsStore'))
 			var company_store = Ext.data.StoreManager.lookup('bbCompaniesStore')
@@ -80,12 +82,14 @@ function showLogin(store){
 														{
 															title: 'Benvenuto', 
 															text: this.result.user.user
-														}); ;
+														});
 				win.close()
 				this.result.user.logged = true // per qualche motivo il server non setta user.logged, lo faccio io
+				console.log('result user')
+				console.log(this.result.user)
 				BB.user = new User(this.result.user)
-				console.log('session_id')
-				console.log(BB.user.user.session_id)
+				console.log('BB.user')
+				console.log(BB.user)
 				loadData(BB.user)
 			//	store.add({user:this.result.user.user,admin:this.result.user.admin,enabled:this.result.user.enabled,logged:this.result.user.logged,superuser:this.result.user.superuser,password:this.result.user.password})
 				//store.sync()
@@ -98,12 +102,12 @@ function showLogin(store){
 			// at the user telling him / her as much.  
  
 			failure:function(form, action){ 
-			    if(action.failureType == 'server'){ 
-				obj = Ext.util.JSON.decode(action.response.responseText); 
-				Ext.Msg.alert('Login Failed!', obj.errors.reason); 
-			    }else{ 
-				Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
-			    } 
+				if(action.failureType == 'server'){ 
+					obj = Ext.util.JSON.decode(action.response.responseText); 
+					Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+				}else{
+					Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+				} 
 			    login.getForm().reset(); 
 			} 
 		    }); 

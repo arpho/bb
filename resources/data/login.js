@@ -60,8 +60,8 @@ function handlePost(conversation)
 						var new_session= session.find({'user.id':user.id}).sort({_id:-1}).limit(1).toArray()[0]
 						var session_id = new_session._id.toString()
 						user.session_id = session_id
-						results.user= user
-						results.success=true
+						results.user = user
+						results.success = true
 						return JSON.to(results,true)
 					}
 					else

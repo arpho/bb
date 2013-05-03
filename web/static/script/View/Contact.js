@@ -1,9 +1,12 @@
 Ext.namespace('BB');
 
-function makeComboStore(session_id)
+function makeComboStore(session_id,group_id)
 {
 	var store = Ext.data.StoreManager.lookup('bbCompanies4ComboStore')
 	store.getProxy().extraParams.session_id = session_id
+	if (!BB.user.user.superuser){
+		store.getProxy().extraParams.group_id = group_id
+	}
 	return store
 }
 
@@ -125,7 +128,7 @@ function make_combo_store_group(session_id)
 					console.log('user nel bottone')
 					console.log(BB.user.user)
 					var dummy ={}
-					contactForm(dummy.a,BB.user.user.session_id)// passo un parametro undefined a contactForm
+					contactForm(dummy.a,BB.user.user.session_id,BB.user.user.group_id)
 				}
 			},
 			{
@@ -183,7 +186,7 @@ function make_combo_store_group(session_id)
 										// defaults to textfield if no xtype is supplied
 										allowBlank: false,
 										xtype:'combo',
-										store:makeComboStore(BB.user.user.session_id),
+										store:makeComboStore(BB.user.user.session_id,BB.user.user.group_id),
 										displayField : 'firm',
 										valueField : 'id',
 										allowBlank: true
@@ -291,12 +294,13 @@ function make_combo_store_group(session_id)
 	//renderTo: Ext.getBody()
 			});//ends contactsGrid
 			
-function contactForm(contact,session_id)
+function contactForm(contact,session_id,group_id)
 {
-	console.log('session in contactForm')
-	console.log(session_id)
+	console.log('group in contactForm')
+	console.log(group_id)
 	var store = Ext.data.StoreManager.lookup('bbCompanies4ComboStore')
 	store.getProxy().extraParams.session_id = session_id
+	store.getProxy().extraParams.group_id = group_id
 	var submitForm = function()
 															{
 																var nomeField = formPanel.items.get(0).items.get(1);

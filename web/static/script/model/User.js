@@ -36,6 +36,9 @@ Ext.define('User',
 			},
 			{
 				name : 'session_id'
+			},
+			{
+				name : 'group'
 			}
     ],
     proxy : {
