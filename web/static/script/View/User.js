@@ -62,7 +62,7 @@ function windowFactory(item,title){
 	{
 		title: title,
 		height: 270,
-		width:650,
+		width:700,
     items: {
 								region: 'center',
 								items: item,
@@ -257,17 +257,22 @@ function showUsers(){
 					{
 						header : 'Password',
 						dataIndex : 'password',
+						hidden: true,
 						flex: 2
 					},
 					{
 						header : 'SuperUser',
 						dataIndex : 'superuser',
 						flex: 1
-					}
-					,
+					},
 					{
 						header : 'Enabled',
 						dataIndex : 'enabled',
+						flex: 1
+					},
+					{
+						header: 'Gruppo',
+						dataIndex: 'group',
 						flex: 1
 					}
 				],

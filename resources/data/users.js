@@ -137,6 +137,7 @@ function handlePost(conversation)
 					var collectionNames = database.collectionNames.toArray()
 					var connection = new MongoDB.connect('127.0.0.1')
 					var collection = new MongoDB.Collection('users', {db: database, connection: connection})
+					var groups = new MongoDB.Collection('groups', {db: database, connection: connection})
 					var text =conversation.entity.text
 					var data = JSON.from(text, true)
 					var user = {}
@@ -145,6 +146,11 @@ function handlePost(conversation)
 					user.superuser = data.superuser
 					user.enabled = data.enabled
 					user.group_id = data.group_id
+					dummy = groups.find({"_id" : new org.bson.types.ObjectId(data.group_id)}).toArray()
+					if (null!=dummy[0])
+						{
+							user.group = dummy[0].group
+						}
 					collection.insert(user)
 	return JSON.to(user,true)
 }

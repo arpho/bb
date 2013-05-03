@@ -13,7 +13,8 @@ Ext.define('User',
 			},
 			{
 				name : 'password',
-				type : 'string'
+				type : 'string',
+				hided: true
 			},
 			{
 				name : 'logged',
