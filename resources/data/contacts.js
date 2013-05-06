@@ -11,6 +11,7 @@
 
 document.executeOnce('/mongo-db/')
 document.executeOnce('/session/')
+document.executeOnce('/constants/')
 var cache_firm_id = {}
 function handleInit(conversation) {
 	conversation.addMediaTypeByName('application/json')
@@ -70,7 +71,7 @@ function handlePost(conversation)
 			}
 		}
 		var firm = conversation.query.get('firm')
-		var databaseName = 'node-mongo-bb'//databaseNames[d]
+		var databaseName = db_name//'node-mongo-bb'//databaseNames[d]
 					var database = connection.getDB(databaseName)
 					var children = []
 					var systemChildren = []
@@ -184,7 +185,7 @@ function handleGet(conversation) {
 				var databaseNames = connection.databaseNames.toArray()
 			
 				for (var d in databaseNames) {
-					var databaseName = 'node-mongo-bb'//databaseNames[d]
+					var databaseName = db_name//databaseNames[d]
 						//return  JSON.to(databaseName, true)
 					var database = connection.getDB(databaseName)
 					var children = []

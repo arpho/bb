@@ -10,6 +10,7 @@
 //
 
 document.executeOnce('/mongo-db/')
+document.executeOnce('/constants/')
 var cache_firm_id = {}
 function handleInit(conversation) {
 	conversation.addMediaTypeByName('application/json')
@@ -37,7 +38,7 @@ function handlePut(conversation)
 		}
 		
 		var firm = conversation.locals.get('firm')
-		var databaseName = 'node-mongo-bb'//databaseNames[d]
+		var databaseName = db_name//'node-mongo-bb'//databaseNames[d]
 		var database = connection.getDB(databaseName)
 		var children = []
 		var systemChildren = []
