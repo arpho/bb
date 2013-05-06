@@ -151,6 +151,7 @@ function make_combo_store_group(session_id)
 															var filteredStore = Ext.data.StoreManager.lookup('bbContactsStore')
 					//delete filteredStore.getProxy().extraParams.firm_id
 					filteredStore.getProxy().extraParams = {}
+					filteredStore.getProxy().extraParams.session_id = BB.user.user.session_id
 					filteredStore.load()
 														}
 												},

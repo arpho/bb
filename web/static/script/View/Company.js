@@ -87,6 +87,7 @@ var linkButton = new Ext.LinkButton({
 															var filteredStore = Ext.data.StoreManager.lookup('bbCompaniesStore')
 					//delete filteredStore.getProxy().extraParams.firm_id
 					filteredStore.getProxy().extraParams = {}
+					filteredStore.getProxy().extraParams.session_id = BB.user.user.session_id
 					filteredStore.load()
 														}
 						},
