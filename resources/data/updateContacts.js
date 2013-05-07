@@ -112,7 +112,7 @@ function handleDelete(conversation)
 			}
 		}
 		
-	var databaseName = 'node-mongo-bb'
+	var databaseName = db_name//'node-mongo-bb'
 	var database = connection.getDB(databaseName)
 	var children = []
 	var systemChildren = []

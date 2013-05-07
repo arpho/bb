@@ -1,5 +1,6 @@
 document.executeOnce('/mongo-db/')
 document.executeOnce('/session/')
+document.executeOnce('/constants/')
 
 function handleInit(conversation) {
 	conversation.addMediaTypeByName('application/json')
@@ -35,7 +36,7 @@ function handleGet(conversation) {
 		}
 if (null !== connection) {
 	try {
-		var databaseName = 'node-mongo-bb'
+		var databaseName = db_name//'node-mongo-bb'
 		var database = connection.getDB(databaseName)
 		var connection = new MongoDB.connect('127.0.0.1')
 		var collection = new MongoDB.Collection('contacts', {db: database, connection: connection}) // i dati isin sono contenuti nei documenti dei contatti

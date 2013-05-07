@@ -284,7 +284,7 @@ function handlePost(conversation)
 			}
 		}
 		var firm = conversation.query.get('firm')
-		var databaseName = 'node-mongo-bb'//databaseNames[d]
+		var databaseName = db_name//'node-mongo-bb'//databaseNames[d]
 					var database = connection.getDB(databaseName)
 					var children = []
 					var systemChildren = []
