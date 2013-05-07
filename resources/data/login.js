@@ -55,6 +55,8 @@ function handlePost(conversation)
 						user.logged_on_d = dateObj.getDate()+1
 						var session_doc = {}
 						session_doc.user = user
+						//elimino le vecchie sessioni
+						session.remove({$where:"new Date()-new Date(this.user.logged_on_y,this.user.logged_on_m,this.user.logged_on_d)>1000*24*60*60"})
 						session.insert(session_doc)
 						session.ensureIndex({logged_in:1})
 						//cerco l'ultima sessione creata dall'utente
