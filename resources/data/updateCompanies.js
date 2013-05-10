@@ -52,7 +52,7 @@ function handlePut(conversation)
 		var data = JSON.from(text, true)
 		var session_id = data.session_id
 		var user = check_session(session,new org.bson.types.ObjectId(session_id))
-		//return  JSON.to(user.toArray(), true)
+		//return  JSON.to(session_id, true)
 		if(user.toArray().length==0)
 		{
 			var r ={}

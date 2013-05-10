@@ -10,7 +10,7 @@ Ext.namespace('BB');
         {
 					idProperty : '_id',
 					type: 'rest',
-					url: 'data/contacts/' /*+ 'node-mongo-bb/contacts' + '/'*/,
+					url: 'data/contacts/',
 					autoload: true,
 					noCache: false,
 					sortParam: undefined,

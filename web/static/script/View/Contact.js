@@ -333,6 +333,8 @@ function contactForm(contact,session_id,group_id)
 																console.log('contatto con gruppo')
 																console.log(Contact)
 																Contact.save()
+																console.log('url contactStore')
+																console.log(Ext.data.StoreManager.lookup('bbContactsStore').getProxy().url)
 																Ext.data.StoreManager.lookup('bbContactsStore').load()
 																contactWindow.close()
 															Ext.gritter.add(

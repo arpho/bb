@@ -23,10 +23,11 @@ function isSystem(collectionName) {
 function handlePost(conversation)
 {/*passo i dati in post per nasconderli
 	*/
-	var text =JSON.from(conversation.form,true)
-	var pwd =  text.loginPassword
+	var text = JSON.from(conversation.form,true)
+	var pwd = text.loginPassword
 	var username =text.loginUsername
-	//return JSON.to(text.loginUsername,true)
+	
+	//return JSON.to({uname:text.loginUsername,pwd:text.loginPassword},true)
 	var connection = application.globals.get('mongoDbConnection')
 		if (null === connection) {
 			try {
@@ -50,15 +51,17 @@ function handlePost(conversation)
 					var results={}
 					if (null!= user){
 						dateObj = new Date()
-						user.logged_on_y = dateObj.getFullYear()
+						/*user.logged_on_y = dateObj.getFullYear()
 						user.logged_on_m = dateObj.getMonth()
-						user.logged_on_d = dateObj.getDate()+1
+						user.logged_on_d = dateObj.getDate()+1*/
+						user.logged_on = dateObj
 						var session_doc = {}
 						session_doc.user = user
-						//elimino le vecchie sessioni
-						session.remove({$where:"new Date()-new Date(this.user.logged_on_y,this.user.logged_on_m,this.user.logged_on_d)>1000*24*60*60"})
+						//elimino le vecchie sessioni più vecchie di 9 ore
+						//session.remove({$where:"new Date()-new Date(this.user.logged_on_y,this.user.logged_on_m,this.user.logged_on_d)>1000*24*60*60"})
+						session.remove({$where:"new Date()-this.user.logged_on>60*60*9*1000"})
 						session.insert(session_doc)
-						session.ensureIndex({logged_in:1})
+						session.ensureIndex({logged_on:1})
 						//cerco l'ultima sessione creata dall'utente
 						var new_session= session.find({'user.id':user.id}).sort({_id:-1}).limit(1).toArray()[0]
 						var session_id = new_session._id.toString()

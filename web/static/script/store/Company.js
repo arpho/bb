@@ -10,7 +10,7 @@ Ext.create('Ext.data.Store',
 				{
 					idProperty : '_id',
 					type: 'rest',
-					url: 'data/companies/' /*+ 'node-mongo-bb/companies' + '/'*/,
+					url: 'data/companies/',
 					autoload: true,
 					noCache: false,
 					sortParam: undefined,

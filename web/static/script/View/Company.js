@@ -205,8 +205,13 @@ var linkButton = new Ext.LinkButton({
 																	CompanyGrid.on('edit', function() {
 																		var company = Ext.ModelManager.create(rec.data, 'Company')
 																		company.data.session_id = BB.user.user.session_id
+																		var old_url = store.getProxy().url
+																		 store.getProxy().url = old_url + BB.user.user.id +'/'
+																		console.log('url')
+																		console.log(store.getProxy().url)
 																		store.remove(company)
 																		company.save()
+																		store.getProxy().url = old_url
 																		store.load()
 																	})
 																	
@@ -280,7 +285,7 @@ function companyForm(company)
 																	var id
 																	if (typeof c!== "undefined"){
 																		id = c.id+'/'//  il trailing slash serve a sistemare lo url della richiesta Post
-																		//console.log(id)
+																		console.log(id)
 																	}
 																	return id
 																}
