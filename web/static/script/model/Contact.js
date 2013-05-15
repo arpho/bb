@@ -69,7 +69,7 @@ Ext.define('Contact', {
 								name : 'numero_back_office'
 							},
 							{
-								name : 'altri_colleghi'
+								name : 'skype'
 							},
 							{
 								name : 'session_id'

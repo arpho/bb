@@ -39,7 +39,12 @@ function make_combo_store_group(session_id)
 							console.log(BB.user.user.session_id)
 							var gridContextMenu = Ext.create('Ext.menu.Menu', {
 								
-									items: [{ text: 'Isin', handler: function(){showIsins(rec.data,BB.user.user.session_id)},icon: 'media/coins.png'},
+									items: [
+									{ text: 'Skype Call',icon:'media/skype.png',handler:function(){
+															window.location = "skype:"+rec.data.skype+"?call"
+																}
+									},
+									{ text: 'Isin', handler: function(){showIsins(rec.data,BB.user.user.session_id)},icon: 'media/coins.png'},
 									{ text: 'Modifica', handler: function(){contactForm(rec.data)},icon: 'media/modifica.png'},
 									{
 										text:'cancella',
@@ -204,6 +209,14 @@ function make_combo_store_group(session_id)
 									}
 									},
 									{
+										header: 'Skype',
+										name: 'skype',
+										dataIndex: 'skype',
+										editor: {
+												allowBlank: true
+											}
+									},
+									{
 										header: 'Email',
 										dataIndex: 'email',
 									editor: {
@@ -308,6 +321,7 @@ function contactForm(contact,session_id,group_id)
 																var firmField = formPanel.items.get(0).items.get(0);
 																console.log('firmField')
 																console.debug(firmField)
+																var skypeField = formPanel.items.get(1).items.get(1)
 																var noteField = formPanel.items.get(1).items.get(0);
 																var telefonoField = formPanel.items.get(0).items.get(3);
 																var mlField = Field = formPanel.items.get(0).items.get(4);
@@ -328,7 +342,7 @@ function contactForm(contact,session_id,group_id)
 																																			type:typeField.getValue(),
 																																			group_id:BB.user.user.group_id,
 																																			paese:paeseField.getValue(),telefono:telefonoField.getValue(),
-																																			ml:mlField.getValue(), comp:compField.getValue(),id:getId(contact)}, 'Contact');
+																																			ml:mlField.getValue(), comp:compField.getValue(),id:getId(contact),skype:skypeField.getValue()}, 'Contact');
 																Contact.data.session_id = BB.user.user.session_id
 																console.log('contatto con gruppo')
 																console.log(Contact)
@@ -441,13 +455,22 @@ function contactForm(contact,session_id,group_id)
 						xtype: 'container',
 						layout: 'hbox',
 						items:[{
-			xtype : 'textfield',
-			fieldLabel : 'Nota',  
-			name : 'note',
-			labelAlign : 'top',
-			cls : 'field-margin',
-			flex : 6
-		},
+								xtype : 'textfield',
+								fieldLabel : 'Nota',  
+								name : 'note',
+								labelAlign : 'top',
+								cls : 'field-margin',
+								flex : 6
+							},
+							{
+								xtype:'textfield',
+								fieldLabel: 'Skype',
+								name: 'skype',
+								labelAlign : 'top',
+								cls : 'field-margin',
+								flex : 1
+							}
+							
 	]
 				}
 		]

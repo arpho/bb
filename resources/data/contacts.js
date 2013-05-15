@@ -98,6 +98,7 @@ function handlePost(conversation)
 					contact.paese = data.paese
 					contact.type = data.type
 					contact.email = data.email
+					contact.skype = data.skype
 					contact.telefono = data.telefono
 					contact.c = data.c
 					contact.p = data.p

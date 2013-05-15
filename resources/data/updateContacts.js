@@ -70,6 +70,7 @@ function handlePut(conversation)
 					contact.ssi = data.ssi
 					contact.Linee = data.Linee
 					contact.email = data.email
+					contact.skype = data.skype
 					contact.telefono = data.telefono
 					contact.type = data.type
 					contact.back_office = data.back_office
@@ -92,9 +93,7 @@ function handlePut(conversation)
 					delete contact["id"]
 					//return JSON.to(contact,true)
 						//return JSON.to('update',true)
-						collection.update({"_id" : new org.bson.types.ObjectId(Id)},{$set:contact})
-					
-	//return "{firm: 'Ed Spencer', note: 'ed@sencha.com','paese':'it'}"
+					collection.update({"_id" : new org.bson.types.ObjectId(Id)},{$set:contact})
 	return JSON.to(contact,true)
 }
 
