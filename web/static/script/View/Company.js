@@ -10,6 +10,7 @@ var linkButton = new Ext.LinkButton({
 	console.log(rowEditingCompany)
 	var CompanyGrid = Ext.create('Ext.grid.Panel',{
 	title: 'Aziende',
+	id: 'company-grid',
 	selType: 'rowmodel',
 		viewConfig: {
 											style : { overflow: 'auto'}
