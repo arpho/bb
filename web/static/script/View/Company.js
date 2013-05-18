@@ -86,11 +86,14 @@ var linkButton = new Ext.LinkButton({
 															// resetto i campi della form
 															companiesFilterParameter = {}
 															var filteredStore = Ext.data.StoreManager.lookup('bbCompaniesStore')
-					//delete filteredStore.getProxy().extraParams.firm_id
-					filteredStore.getProxy().extraParams = {}
-					filteredStore.getProxy().extraParams.session_id = BB.user.user.session_id
-					filteredStore.load()
-														}
+							//delete filteredStore.getProxy().extraParams.firm_id
+							filteredStore.getProxy().extraParams = {}
+							filteredStore.getProxy().extraParams.session_id = BB.user.user.session_id
+							if (!BB.user.user.superuser){
+								filteredStore.getProxy().extraParams.group_id = user.user.group_id
+							}
+							filteredStore.load()
+							}
 						},
 		],
 

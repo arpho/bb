@@ -154,11 +154,14 @@ function make_combo_store_group(session_id)
 															// resetto i campi della form
 															contactsFilterParameter = {}
 															var filteredStore = Ext.data.StoreManager.lookup('bbContactsStore')
-					//delete filteredStore.getProxy().extraParams.firm_id
-					filteredStore.getProxy().extraParams = {}
-					filteredStore.getProxy().extraParams.session_id = BB.user.user.session_id
-					filteredStore.load()
-														}
+						//delete filteredStore.getProxy().extraParams.firm_id
+						filteredStore.getProxy().extraParams = {}
+						filteredStore.getProxy().extraParams.session_id = BB.user.user.session_id
+						if (!BB.user.user.superuser){
+							filteredStore.getProxy().extraParams.group_id = user.user.group_id
+						}
+						filteredStore.load()
+					}
 												},
 												{
 													xtype : 'button',
