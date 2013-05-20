@@ -202,20 +202,19 @@ var linkButton = new Ext.LinkButton({
 						items: [
 						{ text: 'Modifica', handler: function()
 																{
-																	//companyForm(rec.data)
 																	var store = Ext.data.StoreManager.lookup('bbCompaniesStore')
-																	rowEditingCompany.startEdit(index, 0)
+																	//rowEditingCompany.startEdit(index, 0)
 																	rec.data.id = rec.data.id +'/'
+																	
+																	companyForm(rec.data)
 																	CompanyGrid.on('edit', function() {
 																		var company = Ext.ModelManager.create(rec.data, 'Company')
 																		company.data.session_id = BB.user.user.session_id
 																		var old_url = store.getProxy().url
 																		 store.getProxy().url = old_url + BB.user.user.id +'/'
-																		console.log('url')
-																		console.log(store.getProxy().url)
 																		store.remove(company)
 																		company.save()
-																		store.getProxy().url = old_url
+																		store.getProxy().url = old_url // configuro lo store perchè interroghi il server in lettura
 																		store.load()
 																	})
 																	
@@ -288,7 +287,7 @@ function companyForm(company)
 																function getId(c){
 																	var id
 																	if (typeof c!== "undefined"){
-																		id = c.id+'/'//  il trailing slash serve a sistemare lo url della richiesta Post
+																		id = c.id//  il trailing slash serve a sistemare lo url della richiesta Post
 																		console.log(id)
 																	}
 																	return id
@@ -299,7 +298,7 @@ function companyForm(company)
 																id:getId(company)}, 'Company');
 																Company.data.session_id = BB.user.user.session_id
 																Company.save()
-																Ext.data.StoreManager.lookup('bbCompaniesStore').load
+																Ext.data.StoreManager.lookup('bbCompaniesStore').load()
 																companyWindow.close()
 																function setTitleGritter(c){
 																	//console.log(c.id)
