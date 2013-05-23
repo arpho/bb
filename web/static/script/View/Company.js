@@ -4,10 +4,6 @@ var linkButton = new Ext.LinkButton({
 	id: 'grid-excel-button',
 	text: 'Export to Excel'
 });
-	var rowEditingCompany = Ext.create('Ext.grid.plugin.RowEditing', {
-					clicksToEdit: 2,
-	});
-	console.log(rowEditingCompany)
 	var CompanyGrid = Ext.create('Ext.grid.Panel',{
 	title: 'Aziende',
 	id: 'company-grid',
@@ -16,9 +12,6 @@ var linkButton = new Ext.LinkButton({
 											style : { overflow: 'auto'}
 										},
 		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
-		plugins: [
-					rowEditingCompany
-				],
 		dockedItems:[{xtype: 'pagingtoolbar',
 		store: Ext.data.StoreManager.lookup('bbCompaniesStore'),
 		
@@ -389,9 +382,23 @@ function companyForm(company)
 												flex: 2
 											},
 											{
-											xtype: 'textfield',
-											fieldLabel: 'type',  
-											name: 'type',
+											xtype: 'combo',
+							store:{fields: ['key','label'], 
+								data: [
+												{key:'FUND',label: 'FUND'},
+												{key:'INSURANCE',label: 'INSURANCE'}, 
+												{key:'BANCA', label:'BANCA'},
+												{key:'BROKER', label:'BROKER'},
+												{key:'ESECUTION',label: 'ESECUTION'}, 
+												{key:'MM', label:'MM'},
+												{key:'Private Bank', label:'Private Bank'}
+									
+											]
+							},
+											displayField : 'label',
+											valueField : 'key',
+											name : 'type',
+											fieldLabel: 'Tipo',
 											labelAlign: 'top',
 											cls: 'field-margin',
 											flex: 1

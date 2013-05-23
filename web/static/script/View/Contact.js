@@ -4,9 +4,12 @@ function makeComboStore(session_id,group_id)
 {
 	var store = Ext.data.StoreManager.lookup('bbCompanies4ComboStore')
 	store.getProxy().extraParams.session_id = session_id
+	console.log('user')
+	console.log(BB.user.user)
 	if (!BB.user.user.superuser){
 		store.getProxy().extraParams.group_id = group_id
 	}
+	store.load()
 	return store
 }
 
@@ -20,7 +23,7 @@ function make_combo_store_group(session_id)
 
 	var rowEditingContact = Ext.create('Ext.grid.plugin.RowEditing', {
 					clicksToMoveEditor: 1,
-					autoCancel: false
+					autoCancel: true
 	});
 	var ContactsGrid = Ext.create('Ext.grid.Panel', {
 				title: 'Contatti',
@@ -45,7 +48,7 @@ function make_combo_store_group(session_id)
 																}
 									},
 									{ text: 'Isin', handler: function(){showIsins(rec.data,BB.user.user.session_id)},icon: 'media/coins.png'},
-									{ text: 'Modifica', handler: function(){contactForm(rec.data)},icon: 'media/modifica.png'},
+									{ text: 'Modifica', handler: function(){contactForm(rec.data,BB.user.user.session_id)},icon: 'media/modifica.png'},
 									{
 										text:'cancella',
 										icon: 'media/delete.png',
@@ -315,9 +318,12 @@ function contactForm(contact,session_id,group_id)
 {
 	console.log('group in contactForm')
 	console.log(group_id)
+	
 	var store = Ext.data.StoreManager.lookup('bbCompanies4ComboStore')
 	store.getProxy().extraParams.session_id = session_id
-	store.getProxy().extraParams.group_id = group_id
+	if (!BB.user.user.superuser){
+		store.getProxy().extraParams.group_id = group_id
+	}
 	var submitForm = function()
 															{
 																var nomeField = formPanel.items.get(0).items.get(1);
@@ -390,7 +396,6 @@ function contactForm(contact,session_id,group_id)
 													this.store.load()
 													var defaultValue = (typeof contact==="undefined")?'':contact.firm_id
 													this.setValue(defaultValue)
-													console.debug(defaultValue)
 												}
 											},
 	   // mode: 'remote',

@@ -258,21 +258,26 @@ function handleGet(conversation) {
 							if (typeof firm  === "undefined")// se undefined firm non presente in cache
 							{
 								//return  JSON.to(person, true)
-								dummy = collection_company.find({"_id" : new org.bson.types.ObjectId(person.firm_id)}).toArray()
-								
-								if (null!=dummy[0])
-								{
-									firm = dummy[0].firm
-									//return  JSON.to(firm, true)
-								}
-								else
-								{
+								//try{
+									dummy = collection_company.find({"_id" : new org.bson.types.ObjectId(person.firm_id)}).toArray()
 									
-									firm = 'azienda rimossa'
-									
-								}
-								cache_firm_id[person.firm_id] = firm
-							person.firm = firm
+									if (null!=dummy[0])
+									{
+										firm = dummy[0].firm
+										//return  JSON.to(firm, true)
+									}
+									else
+									{
+										
+										firm = 'azienda rimossa'
+										
+									}
+									cache_firm_id[person.firm_id] = firm
+									person.firm = firm
+								/*}
+								catch(e){
+										firm = 'trouble'
+								}*/
 							//return  JSON.to(person, true)
 						}
 						//return  JSON.to(person, true)
