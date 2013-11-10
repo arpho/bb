@@ -1,0 +1,8 @@
+PROJECT_NAME= exporter
+OUTPUT_DIRECTORY= /home/giuseppe/Projects/bb/4threlease/exporter/api
+INPUT= /home/giuseppe/Projects/workspace-eclipse/bb_on_mongo/exporter
+FILE_PATTERNS= *.py
+EXTRACT_ALL = yes
+EXTRACT_PRIVATE = yes
+EXTRACT_STATIC = yes
+FILE_PATTERNS = *.py
